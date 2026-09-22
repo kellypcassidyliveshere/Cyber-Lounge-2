@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proceed to Payment - Cyber Lounge & Juice Bar</title>
+    <style>
+        :root {
+            --bg-color: #0d0e15;
+            --card-bg: #161824;
+            --text-color: #f0f0f8;
+            --green: #2ecc71;
+            --purple: #b15eff;
+            --blue: #00bfff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px 15px 40px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--purple);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            background: var(--card-bg);
+            border: 1px solid #272a3d;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .total-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--green);
+            margin-top: 5px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: var(--blue);
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .payment-option {
+            position: relative;
+        }
+
+        .payment-option input {
+            display: none;
+        }
+
+        .payment-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: var(--card-bg);
+            border: 2px solid #272a3d;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .payment-option input:checked + .payment-label {
+            border-color: var(--green);
+            background: #1a232a;
+            color: var(--green);
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background: var(--card-bg);
+            border: 1px solid #272a3d;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .card-details {
+            display: none;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #272a3d;
+            margin-bottom: 20px;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 16px;
+            background: var(--green);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* Receipt Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 2px solid var(--green);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            max-width: 380px;
+            width: 100%;
+        }
+
+        .receipt-number {
+            font-size: 1.4rem;
+            color: var(--yellow);
+            font-weight: bold;
+            margin: 15px 0;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header-title">Checkout</div>
+
+        <div class="summary-card">
+            <div>Order Total</div>
+            <div id="final-total" class="total-amount">$0</div>
+        </div>
+
+        <div class="section-title">Select Payment Method</div>
+        <div class="payment-methods">
+            <div class="payment-option">
+                <input type="radio" name="payment" id="gpay" value="Google Pay" onchange="toggleCardDetails(false)">
+                <label for="gpay" class="payment-label">Google Pay</label>
+            </div>
+            <div class="payment-option">
+                <input type="radio" name="payment" id="applepay" value="Apple Pay" onchange="toggleCardDetails(false)">
+                <label for="applepay" class="payment-label">Apple Pay</label>
+            </div>
+            <div class="payment-option">
+                <input type="radio" name="payment" id="card" value="Credit Card" onchange="toggleCardDetails(true)">
+                <label for="card" class="payment-label">Credit Card</label>
+            </div>
+            <div class="payment-option">
+                <input type="radio" name="payment" id="cash" value="Cash" onchange="toggleCardDetails(false)">
+                <label for="cash" class="payment-label">Cash</label>
+            </div>
+        </div>
+
+        <div id="card-details-form" class="card-details">
+            <div class="form-group">
+                <label for="card-num">Card Number</label>
+                <input type="text" id="card-num" class="form-control" placeholder="•••• •••• •••• ••••">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 1;">
+                    <label for="expiry">Expiry</label>
+                    <input type="text" id="expiry" class="form-control" placeholder="MM/YY">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" class="form-control" placeholder="123">
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-pay" onclick="completePayment()">Pay Now</button>
+    </div>
+
+    <!-- Receipt Confirmation Modal -->
+    <div id="receipt-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: var(--green);">Payment Complete!</h2>
+            <p style="margin-top: 10px; color: #aaa;">Your receipt number is:</p>
+            <div id="receipt-id" class="receipt-number">#CLJ-000000</div>
+            <p style="margin-bottom: 20px; font-size: 0.9rem;">Thank you for your order!</p>
+            <button class="btn-pay" onclick="finishOrder()">Return to Home</button>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const total = localStorage.getItem('finalTotal') || localStorage.getItem('drinkTotal') || 0;
+            document.getElementById('final-total').innerText = '$' + total;
+        };
+
+        function toggleCardDetails(show) {
+            document.getElementById('card-details-form').style.display = show ? 'block' : 'none';
+        }
+
+        function completePayment() {
+            const selectedMethod = document.querySelector('input[name="payment"]:checked');
+            if (!selectedMethod) {
+                alert('Please select a payment method.');
+                return;
+            }
+
+            // Generate receipt number
+            const receiptNum = 'CLJ-' + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('receipt-id').innerText = '#' + receiptNum;
+            document.getElementById('receipt-modal').style.display = 'flex';
+        }
+
+        function finishOrder() {
+            // Reset state and redirect home
+            localStorage.removeItem('drinkTotal');
+            localStorage.removeItem('finalTotal');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

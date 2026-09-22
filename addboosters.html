@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Boosters - Cyber Lounge & Juice Bar</title>
+    <style>
+        :root {
+            --bg-color: #0d0e15;
+            --card-bg: #161824;
+            --text-color: #f0f0f8;
+            --green: #2ecc71;
+            --purple: #b15eff;
+            --accent-purple: #8a2be2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px 15px 90px;
+        }
+
+        .header-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .booster-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .booster-card {
+            background: var(--card-bg);
+            border: 1px solid #272a3d;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .booster-card.selected {
+            border-color: var(--green);
+            background-color: #1a232a;
+        }
+
+        .booster-info {
+            padding-right: 15px;
+        }
+
+        .booster-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .booster-desc {
+            font-size: 0.85rem;
+            color: #a0a5b5;
+            line-height: 1.3;
+        }
+
+        .booster-action {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #888;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .booster-card.selected .booster-action {
+            color: var(--green);
+        }
+
+        /* Fixed Footer */
+        .sticky-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 75px;
+            background: #11131f;
+            border-top: 2px solid var(--purple);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 99;
+        }
+
+        .total-display {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .total-amount {
+            color: var(--green);
+            font-size: 1.3rem;
+        }
+
+        .btn-add-order {
+            background: var(--accent-purple);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-title">ADD BOOSTER $2 EACH</div>
+
+    <div class="booster-list">
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">Vitamin C</div>
+                <div class="booster-desc">High-dose raw ascorbic acid for complete immune defense and antioxidant cell recovery.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">Collagen Peptides</div>
+                <div class="booster-desc">Pure hydrolysed bovine matrix to support joint structural load, skin elasticity, and cellular repair.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">Magnesium Glycinate</div>
+                <div class="booster-desc">High-absorption neural driver targeting muscle relaxation, stress modulation, and biological decompression.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">Electrolyte Blend</div>
+                <div class="booster-desc">Balanced hydration salts optimizing cellular fluid balance and preventing cramping during long grinds.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">Prebiotic Fibre</div>
+                <div class="booster-desc">Pure clean inulin fueling microflora stabilization, optimal nutrient digestion, and gut boundary health.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">Plant Protein Isolate</div>
+                <div class="booster-desc">Neutral premium amino structure to sustain physical stamina, muscle synthesis, and fullness curves.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">B-Complex</div>
+                <div class="booster-desc">Raw mitochondrial fuel compound supporting daily cellular energy pathways and clear cognitive processing.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">Zinc</div>
+                <div class="booster-desc">Standardized biological defense catalyst managing immune response integrity and cellular metabolic health.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">L-Glutamine</div>
+                <div class="booster-desc">Targeted amino acid sequence optimizing digestive wall density and accelerating post-exertion recovery.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">Omega-3 Microcaps</div>
+                <div class="booster-desc">Flavourless microencapsulated essential fatty acids prioritizing cardiovascular protection and neural network health.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">L-Carnitine</div>
+                <div class="booster-desc">Pure amino transport engine optimizing cellular fatty acid conversion into efficient, active energy output.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">Weight-Loss Support</div>
+                <div class="booster-desc">Thermogenic botanical blend containing active green tea matrices to accelerate metabolic efficiency safely.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">Nootropic Focus</div>
+                <div class="booster-desc">Alpha-GPC and L-Theanine neural stacks boosting deep gaming focus, processing speeds, and calm clarity.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+
+        <div class="booster-card" onclick="toggleBooster(this)">
+            <div class="booster-info">
+                <div class="booster-name">Sleep Support</div>
+                <div class="booster-desc">Soothing active mineral and herbal matrix easing system parameters to promote deeper overnight REM rest cycles.</div>
+            </div>
+            <div class="booster-action">+</div>
+        </div>
+    </div>
+
+    <!-- Fixed Footer -->
+    <div class="sticky-footer">
+        <div class="total-display">Total: <span id="total-price" class="total-amount">$0</span></div>
+        <a href="proceedpayment.html" class="btn-add-order">Add to Order</a>
+    </div>
+
+    <script>
+        let baseTotal = 0;
+        let boosterCount = 0;
+
+        window.onload = function() {
+            const savedTotal = localStorage.getItem('drinkTotal');
+            if (savedTotal) {
+                baseTotal = parseInt(savedTotal);
+            }
+            updateDisplay();
+        };
+
+        function toggleBooster(card) {
+            const isSelected = card.classList.toggle('selected');
+            const actionBtn = card.querySelector('.booster-action');
+
+            if (isSelected) {
+                actionBtn.innerText = '✓';
+                boosterCount++;
+            } else {
+                actionBtn.innerText = '+';
+                boosterCount--;
+            }
+
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            const grandTotal = baseTotal + (boosterCount * 2);
+            document.getElementById('total-price').innerText = '$' + grandTotal;
+            localStorage.setItem('finalTotal', grandTotal);
+        }
+    </script>
+</body>
+</html>
+
