@@ -230,7 +230,11 @@
             <h2 style="color: var(--green);">Payment Complete!</h2>
             <p style="margin-top: 10px; color: #aaa;">Your receipt number is:</p>
             <div id="receipt-id" class="receipt-number">#CLJ-000000</div>
-            <p style="margin-bottom: 20px; font-size: 0.9rem;">Thank you for your order!</p>
+<!-- Inside <div id="receipt-modal"> -->
+<div id="qrcode" style="margin: 15px auto; display: flex; justify-content: center;"></div>
+    
+
+        <p style="margin-bottom: 20px; font-size: 0.9rem;">Thank you for your order!</p>
             <button class="btn-pay" onclick="finishOrder()">Return to Home</button>
         </div>
     </div>
@@ -245,17 +249,30 @@
             document.getElementById('card-details-form').style.display = show ? 'block' : 'none';
         }
 
-        function completePayment() {
-            const selectedMethod = document.querySelector('input[name="payment"]:checked');
-            if (!selectedMethod) {
-                alert('Please select a payment method.');
-                return;
-            }
+function completePayment() {
+    const selectedMethod = document.querySelector('input[name="payment"]:checked');
+    if (!selectedMethod) {
+        alert("Please select a payment method.");
+        return;
+    }
 
-            // Generate receipt number
-            const receiptNum = 'CLJ-' + Math.floor(100000 + Math.random() * 900000);
-            document.getElementById('receipt-id').innerText = '#' + receiptNum;
-            document.getElementById('receipt-modal').style.display = 'flex';
+    // Generate receipt number
+    const receiptNum = "CL-" + Math.floor(100000 + Math.random() * 900000);
+    document.getElementById("receipt-id").innerText = receiptNum;
+
+    // Clear any previously generated QR code
+    document.getElementById("qrcode").innerHTML = "";
+
+    // Generate new QR code containing the receipt number
+    new QRCode(document.getElementById("qrcode"), {
+        text: receiptNum,
+        width: 128,
+        height: 128
+    });
+
+    // Display receipt modal
+    document.getElementById("receipt-modal").style.display = "block";
+}
         }
 
         function finishOrder() {
@@ -264,6 +281,9 @@
             localStorage.removeItem('finalTotal');
             window.location.href = 'index.html';
         }
+
+
+ src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
     </script>
 </body>
 </html>
