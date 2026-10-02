@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cyber Lounge & Juice Bar</title>
     <style>
+
+
+
+/* Pink and Purple Gradient & Glow Effect */
+.coming-soon-badge {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, #ff007f 0%, #a100ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 12px rgba(255, 0, 127, 0.4);
+text-align: center;
+}
         :root {
             --bg-color: #0d0e15;
             --card-bg: #161824;
@@ -296,10 +313,88 @@
             font-weight: bold;
             font-size: 0.9rem;
         }
+
+
+
+/* Membership Sign-Up Section */
+.signup-container {
+  text-align: center;
+  margin: 2rem auto;
+  padding: 1.5rem 1rem;
+  max-width: 420px;
+  background: #161824;
+  border: 2px solid #39ff14; /* Highlighter green border */
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.3); /* Neon green glow */
+}
+
+.signup-container h2 {
+  color: #39ff14; /* Highlighter green text */
+  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.signup-container p {
+  color: #f0f0f0;
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+}
+
+/* Flex layout to keep inputs neatly stacked and centered in boxes */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.signup-form input[type="email"] {
+  width: 85%;
+  max-width: 320px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #39ff14;
+  background: #0d0e15;
+  color: #ffffff;
+  font-size: 0.95rem;
+  text-align: center;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.signup-form input[type="email"]:focus {
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.6);
+}
+
+.signup-form button {
+  width: 85%;
+  max-width: 320px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #39ff14; /* Highlighter green button */
+  color: #0d0e15; /* Dark contrast text */
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.signup-form button:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
     </style>
 </head>
 <body>
 
+
+<header class="hero">
+  <!-- Coming Soon Text -->
+  <span class="coming-soon-badge">Coming Soon</span>
+  
     <!-- Header Title -->
     <div class="header-title">
         <div class="title-yellow">Cyber Lounge</div>
@@ -443,6 +538,21 @@
             <button class="btn-submit" style="background: var(--green); color: #000;" onclick="closeModal()">Back to Drink Menu</button>
         </div>
     </div>
+<!-- Membership Sign-Up Form -->
+<section class="signup-container">
+  <h2>Join The Membership</h2>
+  <p>Sign up with your email to get early access and updates.</p>
+  
+  <form action="https://formspree.io/f/xoeqbpoq" method="POST" class="signup-form">
+    <input 
+      type="email" 
+      name="email" 
+      placeholder="Enter your email address" 
+      required 
+    />
+    <button type="submit">Sign Up</button>
+  </form>
+</section>
 
     <!-- Fixed Footer -->
     <div class="sticky-footer">
