@@ -130,6 +130,42 @@
             letter-spacing: 0.5px;
             box-shadow: 0 0 10px rgba(138, 43, 226, 0.4);
         }
+/* Pulsing Pink Text */
+.foundation-text {
+  font-size: 13px;
+  font-weight: bold;
+  color: #FF69B4;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  animation: pinkTextPulse 2s infinite ease-in-out;
+  display: block;
+}
+
+/* Green Link */
+.foundation-link {
+  font-size: 12px;
+  color: #00FF00;
+  text-decoration: underline;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  margin-top: 4px;
+}
+
+/* Pink Pulse Animation */
+@keyframes pinkTextPulse {
+  0%, 100% {
+    color: #FF69B4;
+    text-shadow: 0 0 5px rgba(255, 105, 180, 0.6);
+  }
+  50% {
+    color: #FF1493;
+    text-shadow: 0 0 15px rgba(255, 20, 147, 1), 0 0 8px rgba(255, 105, 180, 0.8);
+  }
+}
+
+
     </style>
 </head>
 <body>
@@ -151,9 +187,6 @@
     </div>
   </div>
 </div>
-
-<!-- YOUR EXISTING TITLE -->
-<h1 class="page-title">Add Boosters $2 each</h1>
 
     <div class="header-title">ADD BOOSTER $2 EACH</div>
 
