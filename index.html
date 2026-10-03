@@ -529,16 +529,31 @@ text-align: center;
 
         <button class="btn-submit" onclick="processPayment()">Proceed to Payment</button>
     </div>
-
-    <!-- Payment Confirmation Modal -->
-    <div id="payment-modal" class="modal">
-        <div class="modal-content">
-            <h2 style="color: var(--green); margin-bottom: 10px;">Payment Successful!</h2>
-            <p style="margin-bottom: 20px;">You can now purchase a drink.</p>
-            <button class="btn-submit" style="background: var(--green); color: #000;" onclick="closeModal()">Back to Drink Menu</button>
+<!-- Payment Confirmation Modal -->
+<div id="payment-modal" class="modal">
+    <div class="modal-content">
+        <h2 style="color: var(--green);">Payment Confirmation</h2>
+        <p style="margin-bottom: 20px;">Scan QR code to finalize your payment receipt.</p>
+        
+        <!-- QR Code Container -->
+        <div id="qr-code-container" style="text-align: center; margin-bottom: 15px;">
+            <img id="qr-code-img" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=PAYMENT-SUCCESS" alt="Payment QR Code" style="border: 2px solid var(--green); border-radius: 8px; padding: 5px; background: #fff;" />
         </div>
+
+        <!-- Receipt Info -->
+        <div id="receipt-details" style="font-size: 0.9rem; margin-bottom: 20px; text-align: left;">
+            <p><strong>Status:</strong> <span style="color: var(--green);">QR Received</span></p>
+            <p><strong>Transaction ID:</strong> <span id="receipt-id">#TXN-88492</span></p>
+        </div>
+
+        <!-- Proceed Button -->
+        <a href="gamerslounge.html" class="btn-submit" style="display: block; text-align: center; text-decoration: none;">
+            Proceed To Gamers Lounge &rarr;
+        </a>
     </div>
-<!-- Membership Sign-Up Form -->
+</div>
+
+ <!-- Membership Sign-Up Form -->
 <section class="signup-container">
   <h2>Join The Membership</h2>
   <p>Sign up with your email to get early access and updates.</p>
