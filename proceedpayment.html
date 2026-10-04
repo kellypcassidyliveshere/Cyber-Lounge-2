@@ -3,334 +3,226 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Checkout - Cyber Lounge</title>
-
-  <!-- Include QR Code Library -->
+  <title>Select Payment Method</title>
+  <!-- QRCode.js Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
-
     body {
-      background-color: #08080a;
+      background-color: #0d0d0f;
       color: #ffffff;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      padding: 20px;
+      margin: 0;
+      padding: 16px;
     }
-
-    /* Outer Wrapper Card */
-    .checkout-container {
-      width: 100%;
-      max-width: 400px;
-      background-color: #121319;
-      border: 1px solid #222430;
+    .card {
+      background-color: #16161e;
       border-radius: 16px;
       padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
-
-    .title {
-      color: #00e676;
-      font-size: 1.4rem;
-      font-weight: 700;
+    h2 {
+      color: #00ff66;
       text-align: center;
+      margin-top: 0;
       margin-bottom: 20px;
-      text-transform: uppercase;
+      font-size: 1.25rem;
       letter-spacing: 0.5px;
     }
-
-    /* Payment Method Selector Grid */
-    .payment-options {
+    .price-display {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 20px;
+      background: #20202c;
+      padding: 12px;
+      border-radius: 8px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: #a0a0b0;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #2e2e3e;
+      background-color: #20202c;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+    }
+    .input-group input:focus {
+      border-color: #00ff66;
+    }
+    .payment-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
       margin-bottom: 20px;
     }
-
-    .pay-btn {
-      background: #1c1d27;
-      border: 1px solid #2a2c3a;
-      border-radius: 10px;
+    .method-btn {
+      background-color: #20202c;
+      border: 1px solid transparent;
       color: #ffffff;
-      padding: 14px 10px;
-      font-size: 0.9rem;
+      padding: 14px;
+      border-radius: 8px;
       font-weight: 600;
+      font-size: 0.9rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.2s ease;
     }
-
-    .pay-btn:hover {
-      border-color: #00e676;
-      background: #232533;
+    .method-btn.selected {
+      border-color: #00ff66;
+      background-color: #282838;
     }
-
-    .pay-btn.selected {
-      border: 2px solid #00e676;
-      background: rgba(0, 230, 118, 0.1);
-      color: #00e676;
-    }
-
-    /* Credit Card Input Form */
-    .card-fields {
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
-      background: #181922;
-      padding: 14px;
-      border-radius: 10px;
-      border: 1px solid #2a2c3a;
-    }
-
-    .card-fields input {
-      background: #0d0e12;
-      border: 1px solid #2a2c3a;
-      border-radius: 6px;
-      padding: 10px;
-      color: #fff;
-      font-size: 0.85rem;
-    }
-
-    .card-fields .row {
-      display: flex;
-      gap: 10px;
-    }
-
-    .card-fields .row input {
-      width: 50%;
-    }
-
-    /* Submit / Pay Button */
-    .btn-submit-payment {
+    .action-btn {
       width: 100%;
-      padding: 14px;
-      background-color: #00e676;
+      background-color: #00ff66;
       color: #000000;
-      font-weight: 800;
-      font-size: 1rem;
       border: none;
+      padding: 16px;
       border-radius: 10px;
+      font-weight: bold;
+      font-size: 1rem;
       cursor: pointer;
       text-transform: uppercase;
-      transition: background-color 0.2s ease, transform 0.1s ease;
+      letter-spacing: 0.5px;
     }
-
-    .btn-submit-payment:hover {
-      background-color: #00c853;
+    .action-btn:hover {
+      background-color: #00e65c;
     }
-
-    /* Success / Receipt Modal View */
-    .checkout-modal {
+    /* Receipt Styles */
+    #receipt-section {
       display: none;
       text-align: center;
-      border: 2px solid #00e676;
-      box-shadow: 0 0 20px rgba(0, 230, 118, 0.15);
-      border-radius: 16px;
-      padding: 24px 16px;
-      background-color: #121319;
     }
-
-    .checkout-modal h2 {
-      color: #00e676;
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .checkout-modal p {
-      color: #a0a5b5;
-      font-size: 0.95rem;
-      margin: 4px 0;
-    }
-
-    .receipt-number {
-      color: #ffc107;
-      font-size: 1.4rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-      margin: 8px 0 16px 0;
-    }
-
-    .user-tag {
-      color: #e0e0e0;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    .qr-container {
+    .qrcode-container {
       background: #ffffff;
-      padding: 12px;
+      padding: 16px;
       border-radius: 12px;
       display: inline-block;
-      margin: 14px 0;
+      margin: 16px 0;
     }
-
-    .qr-container img, .qr-container canvas {
-      display: block !important;
-      margin: 0 auto;
+    .receipt-details {
+      font-size: 0.9rem;
+      color: #a0a0b0;
+      margin-bottom: 20px;
+      line-height: 1.6;
     }
-
-    .btn-gaming-lounge {
-      display: block;
-      width: 100%;
-      padding: 14px 16px;
-      margin-top: 18px;
-      background-color: #00e676;
-      color: #000000;
-      font-weight: 800;
-      font-size: 0.95rem;
-      letter-spacing: 0.5px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      text-transform: uppercase;
-      transition: background-color 0.2s ease;
-      text-decoration: none;
-    }
-
-    .btn-gaming-lounge:hover {
-      background-color: #00c853;
+    .receipt-details strong {
+      color: #ffffff;
     }
   </style>
 </head>
 <body>
 
-  <div class="checkout-container">
+  <!-- Payment Selection State -->
+  <div class="card" id="payment-card">
+    <h2>SELECT PAYMENT METHOD</h2>
+
+    <div class="price-display">
+      Total: $<span id="total-amount">0.00</span>
+    </div>
+
+    <div class="input-group">
+      <label for="username">Gamer Username</label>
+      <input type="text" id="username" placeholder="Enter your username" required />
+    </div>
+
+    <div class="payment-grid">
+      <button class="method-btn selected" type="button" onclick="selectMethod(this)">💳 Google Pay</button>
+      <button class="method-btn" type="button" onclick="selectMethod(this)">🍎 Apple Pay</button>
+      <button class="method-btn" type="button" onclick="selectMethod(this)">💳 Credit Card</button>
+      <button class="method-btn" type="button" onclick="selectMethod(this)">💵 Cash at Bar</button>
+    </div>
+
+    <button class="action-btn" onclick="processPayment()">Complete Payment</button>
+  </div>
+
+  <!-- Receipt State -->
+  <div class="card" id="receipt-section">
+    <h2>PAYMENT SUCCESSFUL</h2>
     
-    <!-- STEP 1: PAYMENT FORM VIEW -->
-    <div id="payment-step">
-      <h2 class="title">Select Payment Method</h2>
+    <div class="qrcode-container" id="qrcode"></div>
 
-      <div class="payment-options">
-        <button type="button" class="pay-btn" onclick="selectPayment('gpay', this)">
-          💳 Google Pay
-        </button>
-        <button type="button" class="pay-btn" onclick="selectPayment('applepay', this)">
-          🍎 Apple Pay
-        </button>
-        <button type="button" class="pay-btn" onclick="selectPayment('card', this)">
-          💳 Credit Card
-        </button>
-        <button type="button" class="pay-btn" onclick="selectPayment('cash', this)">
-          💵 Cash at Bar
-        </button>
-      </div>
-
-      <!-- Optional Card Details Input -->
-      <div id="card-form" class="card-fields">
-        <input type="text" placeholder="Card Number" maxlength="19">
-        <div class="row">
-          <input type="text" placeholder="MM/YY" maxlength="5">
-          <input type="text" placeholder="CVC" maxlength="4">
-        </div>
-      </div>
-
-      <button type="button" class="btn-submit-payment" onclick="processPayment()">
-        Complete Payment
-      </button>
+    <div class="receipt-details">
+      <div>Receipt #: <strong id="receipt-num"></strong></div>
+      <div>Username: <strong id="display-username"></strong></div>
+      <div>Amount Paid: <strong id="display-amount"></strong></div>
     </div>
 
-    <!-- STEP 2: RECEIPT & QR CODE VIEW -->
-    <div id="receipt-step" class="checkout-modal">
-      <h2>Payment Complete!</h2>
-      
-      <p>User: <strong id="username-display" class="user-tag">--</strong></p>
-      <p style="margin-top: 10px;">Your receipt number is:</p>
-      <div id="receipt-display" class="receipt-number">#CLJ-XXXXXX</div>
-
-      <!-- QR Code Output -->
-      <div class="qr-container">
-        <div id="qrcode"></div>
-      </div>
-
-      <p style="font-size: 0.85rem; margin-top: 4px;">Scan at the entrance or counter!</p>
-
-      <!-- Navigate to Gamers Lounge -->
-      <button id="btn-proceed" class="btn-gaming-lounge">
-        PROCEED TO GAMING LOUNGE
-      </button>
-    </div>
-
+    <button class="action-btn" onclick="location.href='gamerslounge.html'">Enter Gamers Lounge</button>
   </div>
 
   <script>
-    let selectedMethod = '';
+    // 1. Get total price passed from URL (e.g. payment.html?total=15.00)
+    const urlParams = new URLSearchParams(window.location.search);
+    const total = urlParams.get('total') || '0.00';
+    document.getElementById('total-amount').textContent = parseFloat(total).toFixed(2);
 
-    function selectPayment(method, element) {
-      selectedMethod = method;
-      
-      // Update button highlight active state
-      document.querySelectorAll('.pay-btn').forEach(btn => btn.classList.remove('selected'));
+    // 2. Payment Method Selection Handler
+    function selectMethod(element) {
+      document.querySelectorAll('.method-btn').forEach(btn => btn.classList.remove('selected'));
       element.classList.add('selected');
-
-      // Toggle credit card input view
-      const cardForm = document.getElementById('card-form');
-      if (method === 'card') {
-        cardForm.style.display = 'flex';
-      } else {
-        cardForm.style.display = 'none';
-      }
     }
 
+    // 3. Process Payment & Generate Receipt
     function processPayment() {
-      if (!selectedMethod) {
-        alert('Please select a payment method to proceed.');
+      const usernameInput = document.getElementById('username').value.trim();
+      
+      if (!usernameInput) {
+        alert('Please enter your username before proceeding.');
         return;
       }
 
-      // Hide payment form and reveal receipt card
-      document.getElementById('payment-step').style.display = 'none';
-      document.getElementById('receipt-step').style.display = 'block';
+      // Generate random receipt number
+      const receiptNumber = 'REC-' + Math.floor(100000 + Math.random() * 900000);
 
-      // 1. Fetch current logged-in username (or default to 'Member')
-      const username = localStorage.getItem('username') || 'Member';
-      document.getElementById('username-display').textContent = username;
+      // Populate Receipt Details
+      document.getElementById('receipt-num').textContent = receiptNumber;
+      document.getElementById('display-username').textContent = usernameInput;
+      document.getElementById('display-amount').textContent = '$' + parseFloat(total).toFixed(2);
 
-      // 2. Generate random receipt number (#CLJ-XXXXXX)
-      const randomDigits = Math.floor(100000 + Math.random() * 900000);
-      const receiptNumber = `#CLJ-${randomDigits}`;
-      document.getElementById('receipt-display').textContent = receiptNumber;
-
-      // 3. Prepare QR Code Data Payload
+      // Generate QR Code containing receipt data JSON
       const qrData = JSON.stringify({
         receipt: receiptNumber,
-        username: username,
-        method: selectedMethod,
-        timestamp: new Date().toISOString()
+        user: usernameInput,
+        amount: total,
+        status: "PAID"
       });
 
-      // 4. Generate QR Code dynamically
-      new QRCode(document.getElementById('qrcode'), {
+      new QRCode(document.getElementById("qrcode"), {
         text: qrData,
         width: 160,
         height: 160,
-        colorDark: '#000000',
-        colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.H
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
       });
 
-      // 5. Store values in sessionStorage for downstream validation
-      sessionStorage.setItem('lastReceipt', receiptNumber);
-      sessionStorage.setItem('activeUser', username);
-
-      // 6. Redirect to Gamers Lounge on button click
-      document.getElementById('btn-proceed').addEventListener('click', () => {
-        window.location.href = 'gamerslounge.html';
-      });
+      // Hide payment form and show receipt
+      document.getElementById('payment-card').style.display = 'none';
+      document.getElementById('receipt-section').style.display = 'block';
     }
   </script>
-
 </body>
 </html>
