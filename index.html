@@ -1,648 +1,597 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Lounge & Juice Bar</title>
-    <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber Lounge & Juice Bar</title>
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- QRCode.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Poppins:wght@400;600;700&display=swap');
 
+    :root {
+      --bg-dark: #0b0c10;
+      --card-bg: #151821;
+      --accent-pink: #ff2a85;
+      --accent-purple: #9a4dff;
+      --accent-green: #00ff66;
+      --accent-yellow: #ffea00;
+      --accent-cyan: #00d2ff;
+      --text-light: #ffffff;
+      --text-muted: #a0a5b5;
+    }
 
-/* Pink and Purple Gradient & Glow Effect */
-.coming-soon-badge {
-  font-size: 1.25rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  background: linear-gradient(135deg, #ff007f 0%, #a100ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: block;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 0 12px rgba(255, 0, 127, 0.4);
-text-align: center;
-}
-        :root {
-            --bg-color: #0d0e15;
-            --card-bg: #161824;
-            --text-color: #f0f0f8;
-            --yellow: #ffd700;
-            --blue: #00bfff;
-            --purple: #b15eff;
-            --green: #2ecc71;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      padding-bottom: 100px;
+      overflow-x: hidden;
+    }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding-bottom: 90px;
-        }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px 15px;
+      text-align: center;
+    }
 
-        /* Title Header */
-        .header-title {
-            text-align: center;
-            padding: 20px 10px 10px;
-            font-size: 2rem;
-            font-weight: 800;
-            line-height: 1.2;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .title-yellow { color: var(--yellow); }
-        .title-blue { color: var(--blue); }
-        .title-purple { color: var(--purple); }
+    /* --- HERO TITLE SECTION --- */
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+      text-shadow: 0px 4px 15px rgba(255, 42, 133, 0.3);
+    }
 
-        /* Main Image */
-        .main-banner {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: cover;
-            display: block;
-        }
+    /* Animated Headlines */
+    .swipe-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin: 5px 0;
+      letter-spacing: 1.5px;
+    }
 
-        /* Tabs */
-        .tabs-nav {
-            display: flex;
-            background: #11131f;
-            border-bottom: 2px solid #232738;
-        }
+    .swipe-left-1 {
+      color: var(--accent-yellow);
+      animation: swipeLeft 0.8s ease-out forwards;
+    }
 
-        .tab-btn {
-            flex: 1;
-            padding: 14px;
-            text-align: center;
-            background: none;
-            border: none;
-            color: #888;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    .swipe-right {
+      color: var(--accent-cyan);
+      font-size: 1.6rem;
+      animation: swipeRight 0.8s ease-out forwards;
+    }
 
-        .tab-btn.active {
-            color: var(--blue);
-            border-bottom: 3px solid var(--blue);
-            background: #191c2b;
-        }
+    .swipe-left-2 {
+      background: linear-gradient(90deg, var(--accent-green), var(--accent-yellow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: swipeLeft 0.8s ease-out forwards;
+    }
 
-        .tab-content {
-            display: none;
-            padding: 20px 10px;
-        }
+    @keyframes swipeLeft {
+      0% { opacity: 0; transform: translateX(-100px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
 
-        .tab-content.active {
-            display: block;
-        }
+    @keyframes swipeRight {
+      0% { opacity: 0; transform: translateX(100px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
 
-        /* Drinks Carousel */
-        .carousel-container {
-            display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            padding: 10px 5px 25px;
-            scroll-behavior: smooth;
-        }
+    /* --- HERO DRINKS IMAGE --- */
+    .hero-img {
+      width: 100%;
+      max-width: 450px;
+      margin: 20px auto;
+      display: block;
+      border-radius: 12px;
+    }
 
-        .carousel-container::-webkit-scrollbar {
-            height: 6px;
-        }
-        .carousel-container::-webkit-scrollbar-thumb {
-            background: var(--purple);
-            border-radius: 10px;
-        }
+    /* --- TAB BUTTONS --- */
+    .tab-container {
+      display: flex;
+      gap: 12px;
+      margin: 25px 0 15px 0;
+    }
 
-        .drink-card {
-            min-width: 160px;
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 15px 10px;
-            text-align: center;
-            border: 1px solid #272a3d;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    .tab-btn {
+      flex: 1;
+      padding: 14px 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--card-bg);
+      border: 2px solid #252a38;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
 
-        .drink-img-wrapper {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid var(--purple);
-            margin-bottom: 10px;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(177, 94, 255, 0.4);
-        }
+    .tab-btn.active {
+      color: #ffffff;
+      border-color: var(--accent-cyan);
+      background: linear-gradient(180deg, #1e2433 0%, var(--card-bg) 100%);
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+    }
 
-        .drink-img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    /* --- CONTENT PANELS --- */
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
 
-        .drink-title {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
+    /* Drink Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 15px;
+    }
 
-        .drink-price {
-            color: var(--yellow);
-            font-size: 0.95rem;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 15px;
+      border: 1px solid #232836;
+      text-align: center;
+      position: relative;
+    }
 
-        .drink-checkbox {
-            width: 22px;
-            height: 22px;
-            accent-color: var(--green);
-            cursor: pointer;
-        }
+    .card-img-wrapper {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 10px auto;
+      border-radius: 50%;
+      padding: 5px;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-yellow));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        /* Fruit Display Modal/Toast */
-        .fruit-info {
-            background: #1f2336;
-            color: var(--blue);
-            border-radius: 8px;
-            padding: 10px;
-            margin-top: 15px;
-            text-align: center;
-            font-weight: bold;
-            display: none;
-            border: 1px solid var(--blue);
-        }
+    .card-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
 
-        /* Pod Tab */
-        .pod-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(70px, 1rem));
-            gap: 12px;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
 
-        .pod-option {
-            position: relative;
-        }
+    .card-price {
+      color: var(--accent-yellow);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
 
-        .pod-option input {
-            display: none;
-        }
+    .checkbox-custom {
+      width: 22px;
+      height: 22px;
+      accent-color: var(--accent-green);
+      cursor: pointer;
+    }
 
-        .pod-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            background: var(--card-bg);
-            border: 2px solid #333;
-            border-radius: 12px;
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+    /* Pod Selection Grid */
+    .pod-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+    }
 
-        .pod-option input:checked + .pod-label {
-            background-color: var(--green);
-            border-color: #fff;
-            color: #000;
-            box-shadow: 0 0 10px var(--green);
-        }
+    .pod-btn {
+      background: var(--card-bg);
+      border: 1px solid #2d3345;
+      color: white;
+      padding: 15px 0;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+    .pod-btn.selected {
+      background: var(--accent-purple);
+      border-color: var(--accent-pink);
+      box-shadow: 0 0 12px rgba(154, 77, 255, 0.6);
+    }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #aaa;
-            font-size: 0.9rem;
-        }
+    /* Form Inputs */
+    .form-group {
+      text-align: left;
+      margin-bottom: 12px;
+    }
 
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            background: var(--card-bg);
-            border: 1px solid #2a2d42;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 1rem;
-        }
+    .form-group label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 4px;
+    }
 
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background: var(--purple);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      background: var(--card-bg);
+      border: 1px solid #2d3345;
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+    }
 
-        /* Payment Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.85);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 20px;
-        }
+    .btn-action {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(90deg, var(--accent-purple), #b537ff);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 4px 15px rgba(154, 77, 255, 0.4);
+    }
 
-        .modal-content {
-            background: var(--card-bg);
-            border: 2px solid var(--green);
-            border-radius: 16px;
-            padding: 25px;
-            text-align: center;
-            max-width: 350px;
-            width: 100%;
-        }
+    /* --- MEMBERSHIP FORM SECTION --- */
+    .membership-card {
+      background: var(--card-bg);
+      border: 2px solid var(--accent-green);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 30px 0;
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);
+    }
 
-        /* Footer */
-        .sticky-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 70px;
-            background: #11131f;
-            border-top: 2px solid var(--purple);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            z-index: 99;
-        }
+    .membership-card h3 {
+      color: var(--accent-green);
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
 
-        .total-display {
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
+    .membership-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
 
-        .total-amount {
-            color: var(--yellow);
-            font-size: 1.3rem;
-        }
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent-green);
+      color: #000;
+      font-weight: 800;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
 
-        .btn-boosters {
-            background: var(--blue);
-            color: #000;
-            text-decoration: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
+    /* --- SOCIAL MEDIA LINKS --- */
+    .social-section {
+      margin: 25px 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
 
+    .social-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid #2d3345;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
 
+    .social-icon.fb:hover { color: #1877f2; border-color: #1877f2; box-shadow: 0 0 10px #1877f2; }
+    .social-icon.wa:hover { color: #25d366; border-color: #25d366; box-shadow: 0 0 10px #25d366; }
 
-/* Membership Sign-Up Section */
-.signup-container {
-  text-align: center;
-  margin: 2rem auto;
-  padding: 1.5rem 1rem;
-  max-width: 420px;
-  background: #161824;
-  border: 2px solid #39ff14; /* Highlighter green border */
-  border-radius: 16px;
-  box-shadow: 0 0 15px rgba(57, 255, 20, 0.3); /* Neon green glow */
-}
+    /* --- FIXED BOTTOM BAR --- */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #0d0e14;
+      border-top: 2px solid var(--accent-purple);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 600px;
+      margin: 0 auto;
+      z-index: 100;
+    }
 
-.signup-container h2 {
-  color: #39ff14; /* Highlighter green text */
-  margin-bottom: 0.5rem;
-  font-size: 1.4rem;
-}
+    .bottom-bar a {
+      color: var(--accent-green);
+      font-size: 0.75rem;
+      text-decoration: underline;
+    }
 
-.signup-container p {
-  color: #f0f0f0;
-  font-size: 0.9rem;
-  margin-bottom: 1.2rem;
-}
+    .total-price {
+      color: var(--accent-yellow);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
 
-/* Flex layout to keep inputs neatly stacked and centered in boxes */
-.signup-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-}
+    .btn-booster {
+      background: var(--accent-cyan);
+      color: #000;
+      font-weight: 700;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
-.signup-form input[type="email"] {
-  width: 85%;
-  max-width: 320px;
-  padding: 12px 14px;
-  border-radius: 8px;
-  border: 1px solid #39ff14;
-  background: #0d0e15;
-  color: #ffffff;
-  font-size: 0.95rem;
-  text-align: center;
-  outline: none;
-  box-sizing: border-box;
-}
+    /* --- RECEIPT MODAL --- */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-.signup-form input[type="email"]:focus {
-  box-shadow: 0 0 10px rgba(57, 255, 20, 0.6);
-}
+    .modal-content {
+      background: var(--card-bg);
+      border: 2px solid var(--accent-purple);
+      border-radius: 16px;
+      padding: 25px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+    }
 
-.signup-form button {
-  width: 85%;
-  max-width: 320px;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background: #39ff14; /* Highlighter green button */
-  color: #0d0e15; /* Dark contrast text */
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
+    .close-modal {
+      position: absolute;
+      top: 10px; right: 15px;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
 
-.signup-form button:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
-}
-    </style>
+    #qrcode {
+      display: flex;
+      justify-content: center;
+      margin: 15px 0;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
 
+  <div class="container">
+    <!-- MAIN BLOCK TITLE -->
+    <h1 class="hero-title">COMING SOON</h1>
 
-<header class="hero">
-  <!-- Coming Soon Text -->
-  <span class="coming-soon-badge">Coming Soon</span>
-  
-    <!-- Header Title -->
-    <div class="header-title">
-        <div class="title-yellow">Cyber Lounge</div>
-        <div class="title-blue">&</div>
-        <div class="title-purple">Juice Bar</div>
+    <!-- ANIMATED SWIPE HEADLINES -->
+    <div class="swipe-title swipe-left-1">CYBER LOUNGE</div>
+    <div class="swipe-title swipe-right">&amp;</div>
+    <div class="swipe-title swipe-left-2">JUICE BAR</div>
+
+    <!-- DRINKS SPLASH IMAGE -->
+    <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80" alt="Juices" class="hero-img">
+
+    <!-- BUTTON TABS -->
+    <div class="tab-container">
+      <button class="tab-btn active" onclick="switchTab('drinks')">Drinks</button>
+      <button class="tab-btn" onclick="switchTab('pods')">Pods</button>
     </div>
 
-    <!-- Main Banner Image -->
-    <img src="mainpic.png" alt="Cyber Lounge Juice Bar" class="main-banner">
-
-    <!-- Tabs Navigation -->
-    <div class="tabs-nav">
-        <button class="tab-btn active" onclick="openTab(event, 'drinks-tab')">Drinks</button>
-        <button class="tab-btn" onclick="openTab(event, 'pod-tab')">Pods</button>
-    </div>
-
-    <!-- DRINKS TAB -->
+    <!-- DRINKS TAB CONTENT -->
     <div id="drinks-tab" class="tab-content active">
-        <div class="carousel-container">
-            <div class="drink-card">
-                <div class="drink-img-wrapper" onclick="showFruits('Kaleb Moon: Lychee & Grape')">
-                    <img src="kalebmoon.jpg" alt="Kaleb Moon">
-                </div>
-                <div class="drink-title">Kaleb Moon</div>
-                <div class="drink-price">$10</div>
-                <input type="checkbox" class="drink-checkbox" data-price="10" onchange="calculateTotal()">
-            </div>
-
-            <div class="drink-card">
-                <div class="drink-img-wrapper" onclick="showFruits('Maia Gold: Mango, Pineapple & Banana')">
-                    <img src="maiagold.jpg" alt="Maia Gold">
-                </div>
-                <div class="drink-title">Maia Gold</div>
-                <div class="drink-price">$11</div>
-                <input type="checkbox" class="drink-checkbox" data-price="11" onchange="calculateTotal()">
-            </div>
-
-            <div class="drink-card">
-                <div class="drink-img-wrapper" onclick="showFruits('Lime Rush: Lime & Ginger')">
-                    <img src="limerush.jpg" alt="Lime Rush">
-                </div>
-                <div class="drink-title">Lime Rush</div>
-                <div class="drink-price">$10</div>
-                <input type="checkbox" class="drink-checkbox" data-price="10" onchange="calculateTotal()">
-            </div>
-
-            <div class="drink-card">
-                <div class="drink-img-wrapper" onclick="showFruits('Cool Melon: Watermelon, Mint & Blueberry')">
-                    <img src="coolmelonrush.jpg" alt="Cool Melon">
-                </div>
-                <div class="drink-title">Cool Melon</div>
-                <div class="drink-price">$11</div>
-                <input type="checkbox" class="drink-checkbox" data-price="11" onchange="calculateTotal()">
-            </div>
-
-            <div class="drink-card">
-                <div class="drink-img-wrapper" onclick="showFruits('Berry Choc Whirl: Strawberry & Chocolate')">
-                    <img src="berrychocwhirl.jpg" alt="Berry Choc Whirl">
-                </div>
-                <div class="drink-title">Berry Choc Whirl</div>
-                <div class="drink-price">$11</div>
-                <input type="checkbox" class="drink-checkbox" data-price="11" onchange="calculateTotal()">
-            </div>
-
-            <div class="drink-card">
-                <div class="drink-img-wrapper" onclick="showFruits('Dragonberry Dream: Dragon Fruit & Raspberry')">
-                    <img src="dragonberrydream.jpg" alt="Dragonberry Dream">
-                </div>
-                <div class="drink-title">Dragonberry Dream</div>
-                <div class="drink-price">$11</div>
-                <input type="checkbox" class="drink-checkbox" data-price="11" onchange="calculateTotal()">
-            </div>
-
-            <div class="drink-card">
-                <div class="drink-img-wrapper" onclick="showFruits('Kiwi Crisp: Apple & Kiwi Fruit')">
-                    <img src="kiwicrisp.jpg" alt="Kiwi Crisp">
-                </div>
-                <div class="drink-title">Kiwi Crisp</div>
-                <div class="drink-price">$10</div>
-                <input type="checkbox" class="drink-checkbox" data-price="10" onchange="calculateTotal()">
-            </div>
+      <div class="grid">
+        <div class="card">
+          <div class="card-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=200&q=80" alt="Kaleb Moon">
+          </div>
+          <div class="card-title">Kaleb Moon</div>
+          <div class="card-price">$10</div>
+          <input type="checkbox" class="checkbox-custom drink-item" value="10" data-name="Kaleb Moon" onchange="calculateTotal()">
         </div>
 
-        <div id="fruit-info" class="fruit-info"></div>
+        <div class="card">
+          <div class="card-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?auto=format&fit=crop&w=200&q=80" alt="Maia Gold">
+          </div>
+          <div class="card-title">Maia Gold</div>
+          <div class="card-price">$11</div>
+          <input type="checkbox" class="checkbox-custom drink-item" value="11" data-name="Maia Gold" onchange="calculateTotal()">
+        </div>
+      </div>
     </div>
 
-    <!-- POD TAB -->
-    <div id="pod-tab" class="tab-content">
-        <h3 style="margin-bottom: 15px; text-align: center;">Select a Pod</h3>
-        <div class="pod-grid">
-            <!-- 14 Checkboxes -->
-            <script>
-                for(let i=1; i<=14; i++){
-                    document.write(`
-                        <div class="pod-option">
-                            <input type="checkbox" id="pod-${i}">
-                            <label for="pod-${i}" class="pod-label">${i}</label>
-                        </div>
-                    `);
-                }
-            </script>
-        </div>
+    <!-- PODS TAB CONTENT -->
+    <div id="pods-tab" class="tab-content">
+      <h3 style="margin-bottom:10px; color:var(--text-muted);">Select a Pod</h3>
+      <div class="pod-grid">
+        <button class="pod-btn" onclick="selectPod(this, 1)">1</button>
+        <button class="pod-btn" onclick="selectPod(this, 2)">2</button>
+        <button class="pod-btn" onclick="selectPod(this, 3)">3</button>
+        <button class="pod-btn" onclick="selectPod(this, 4)">4</button>
+        <button class="pod-btn" onclick="selectPod(this, 5)">5</button>
+        <button class="pod-btn" onclick="selectPod(this, 6)">6</button>
+        <button class="pod-btn" onclick="selectPod(this, 7)">7</button>
+        <button class="pod-btn" onclick="selectPod(this, 8)">8</button>
+      </div>
 
-        <div class="form-group">
-            <label for="booking-date">Select Date</label>
-            <input type="date" id="booking-date" class="form-control">
-        </div>
+      <div class="form-group">
+        <label>Select Date</label>
+        <input type="date" id="booking-date" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Select Time</label>
+        <select id="booking-time" class="form-control">
+          <option>11:00 AM</option>
+          <option>12:00 PM</option>
+          <option>01:00 PM</option>
+          <option>02:00 PM</option>
+          <option>03:00 PM</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="booking-name" class="form-control" placeholder="Enter your name">
+      </div>
 
-        <div class="form-group">
-            <label for="booking-time">Select Time</label>
-            <select id="booking-time" class="form-control">
-                <option value="11:00 AM">11:00 AM</option>
-                <option value="12:00 PM">12:00 PM</option>
-                <option value="1:00 PM">1:00 PM</option>
-                <option value="2:00 PM">2:00 PM</option>
-                <option value="3:00 PM">3:00 PM</option>
-                <option value="4:00 PM">4:00 PM</option>
-                <option value="5:00 PM">5:00 PM</option>
-                <option value="6:00 PM">6:00 PM</option>
-                <option value="7:00 PM">7:00 PM</option>
-                <option value="8:00 PM">8:00 PM</option>
-                <option value="9:00 PM">9:00 PM</option>
-                <option value="10:00 PM">10:00 PM</option>
-                <option value="11:00 PM">11:00 PM</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" class="form-control" placeholder="Enter your name">
-        </div>
-
-        <button class="btn-submit" onclick="processPayment()">Proceed to Payment</button>
+      <button class="btn-action" onclick="generateReceipt()">Proceed to Payment</button>
     </div>
-<!-- Payment Confirmation Modal -->
-<div id="payment-modal" class="modal">
+
+    <!-- FORMSPREE MEMBERSHIP CARD -->
+    <div class="membership-card">
+      <h3>JOIN MEMBERSHIP</h3>
+      <p>Sign up with your email to get early access and updates.</p>
+      <form action="https://formspree.io/f/your_form_id" method="POST">
+        <div class="form-group">
+          <input type="email" name="email" class="form-control" placeholder="Enter your email address" required style="margin-bottom: 10px;">
+        </div>
+        <button type="submit" class="btn-submit">JOIN MEMBERSHIP</button>
+      </form>
+    </div>
+
+    <!-- SOCIAL MEDIA LINKS -->
+    <div class="social-section">
+      <a href="https://www.facebook.com/cyberloungejuicebar" target="_blank" class="social-icon fb"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://wa.me/61434195228" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <a href="https://thefoundationproject.online" target="_blank">10% of all profits fund<br>thefoundationproject.online</a>
+    <div>
+      <span style="font-size:0.8rem; color:var(--text-muted);">Total:</span>
+      <span class="total-price" id="total-price-display">$0</span>
+    </div>
+    <button class="btn-booster">Add Boosters</button>
+  </div>
+
+  <!-- QR RECEIPT MODAL -->
+  <div class="modal" id="receipt-modal">
     <div class="modal-content">
-        <h2 style="color: var(--green);">Payment Confirmation</h2>
-        <p style="margin-bottom: 20px;">Scan QR code to finalize your payment receipt.</p>
-        
-        <!-- QR Code Container -->
-        <div id="qr-code-container" style="text-align: center; margin-bottom: 15px;">
-            <img id="qr-code-img" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=PAYMENT-SUCCESS" alt="Payment QR Code" style="border: 2px solid var(--green); border-radius: 8px; padding: 5px; background: #fff;" />
-        </div>
-
-        <!-- Receipt Info -->
-        <div id="receipt-details" style="font-size: 0.9rem; margin-bottom: 20px; text-align: left;">
-            <p><strong>Status:</strong> <span style="color: var(--green);">QR Received</span></p>
-            <p><strong>Transaction ID:</strong> <span id="receipt-id">#TXN-88492</span></p>
-        </div>
-
-        <!-- Proceed Button -->
-        <a href="gamerslounge.html" class="btn-submit" style="display: block; text-align: center; text-decoration: none;">
-            Proceed To Gamers Lounge &rarr;
-        </a>
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <h2 style="color:var(--accent-green); margin-bottom:10px;">Booking Receipt</h2>
+      <div id="receipt-details" style="text-align:left; font-size:0.9rem; margin-bottom:15px; color:var(--text-muted);"></div>
+      <div id="qrcode"></div>
+      <p style="font-size:0.75rem; color:var(--text-muted);">Scan QR code at entry to confirm pod &amp; drink order.</p>
     </div>
-</div>
+  </div>
 
- <!-- Membership Sign-Up Form -->
-<section class="signup-container">
-  <h2>Join The Membership</h2>
-  <p>Sign up with your email to get early access and updates.</p>
-  
-  <form action="https://formspree.io/f/xoeqbpoq" method="POST" class="signup-form">
-    <input 
-      type="email" 
-      name="email" 
-      placeholder="Enter your email address" 
-      required 
-    />
-    <button type="submit">Sign Up</button>
-  </form>
-</section>
+  <script>
+    let selectedPodNum = null;
 
-    <!-- Fixed Footer -->
-    <div class="sticky-footer">
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
 
-<div style="font-size: 12px; color: #FFFF00; margin-bottom: 4px;">
-  10% of all profits fund 
-  <a href="https://thefoundationproject.online" target="_blank" rel="noopener noreferrer" style="color: #00FF00; text-decoration: underline;">
-    thefoundationproject.online
-  </a>
-</div>
-        <div class="total-display">Total: <span id="total-price" class="total-amount">$0</span></div>
-        <a href="addboosters.html" class="btn-boosters">Add Boosters</a>
-    </div>
+      if(tabName === 'drinks') {
+        event.target.classList.add('active');
+        document.getElementById('drinks-tab').classList.add('active');
+      } else {
+        event.target.classList.add('active');
+        document.getElementById('pods-tab').classList.add('active');
+      }
+    }
 
-    <script>
-        // Tab switching
-        function openTab(evt, tabId) {
-            let i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active");
-            }
-            tablinks = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
-            document.getElementById(tabId).classList.add("active");
-            evt.currentTarget.classList.add("active");
-        }
+    function selectPod(element, podNum) {
+      document.querySelectorAll('.pod-btn').forEach(btn => btn.classList.remove('selected'));
+      element.classList.add('selected');
+      selectedPodNum = podNum;
+    }
 
-        // Show fruit ingredients on image click
-        function showFruits(text) {
-            const infoBox = document.getElementById('fruit-info');
-            infoBox.innerText = text;
-            infoBox.style.display = 'block';
-        }
+    function calculateTotal() {
+      let total = 0;
+      document.querySelectorAll('.drink-item:checked').forEach(item => {
+        total += parseFloat(item.value);
+      });
+      document.getElementById('total-price-display').innerText = '$' + total;
+      return total;
+    }
 
-        // Calculate dynamic drink selection total
-        function calculateTotal() {
-            let total = 0;
-            const checkboxes = document.querySelectorAll('.drink-checkbox');
-            checkboxes.forEach(cb => {
-                if(cb.checked) {
-                    total += parseInt(cb.getAttribute('data-price'));
-                }
-            });
-            document.getElementById('total-price').innerText = '$' + total;
-            localStorage.setItem('drinkTotal', total);
-        }
+    function generateReceipt() {
+      const name = document.getElementById('booking-name').value;
+      const date = document.getElementById('booking-date').value;
+      const time = document.getElementById('booking-time').value;
+      
+      let selectedDrinks = [];
+      document.querySelectorAll('.drink-item:checked').forEach(item => {
+        selectedDrinks.push(item.getAttribute('data-name'));
+      });
 
-        // Handle Pod payment workflow
-        function processPayment() {
-            const username = document.getElementById('username').value;
-            if(!username) {
-                alert('Please enter your username');
-                return;
-            }
-            document.getElementById('payment-modal').style.display = 'flex';
-        }
+      if (!name || !date) {
+        alert('Please complete your name and select a date.');
+        return;
+      }
 
-        function closeModal() {
-            document.getElementById('payment-modal').style.display = 'none';
-            // Switch back to drinks tab
-            const drinkTabBtn = document.querySelectorAll('.tab-btn')[0];
-            openTab({ currentTarget: drinkTabBtn }, 'drinks-tab');
-        }
+      const totalAmount = calculateTotal();
+      const orderSummary = `Name: ${name}\nPod: ${selectedPodNum || 'None'}\nDate: ${date} ${time}\nDrinks: ${selectedDrinks.join(', ') || 'None'}\nTotal: $${totalAmount}`;
 
-        // Sync total price from local storage if carried over
-        window.onload = function() {
-            const savedTotal = localStorage.getItem('drinkTotal');
-            if(savedTotal) {
-                document.getElementById('total-price').innerText = '$' + savedTotal;
-            }
-        }
-    </script>
+      document.getElementById('receipt-details').innerHTML = `
+        <p><strong>Customer:</strong> ${name}</p>
+        <p><strong>Pod:</strong> ${selectedPodNum ? 'Pod #' + selectedPodNum : 'None'}</p>
+        <p><strong>Slot:</strong> ${date} @ ${time}</p>
+        <p><strong>Drinks:</strong> ${selectedDrinks.join(', ') || 'None'}</p>
+        <p><strong>Total Paid:</strong> $${totalAmount}</p>
+      `;
+
+      // Clear previous QR Code
+      document.getElementById('qrcode').innerHTML = '';
+
+      // Generate New QR Code
+      new QRCode(document.getElementById("qrcode"), {
+        text: orderSummary,
+        width: 128,
+        height: 128
+      });
+
+      document.getElementById('receipt-modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('receipt-modal').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
-
