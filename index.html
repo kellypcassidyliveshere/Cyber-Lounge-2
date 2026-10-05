@@ -252,7 +252,6 @@
       font-size: 1rem;
     }
 
-    /* Modern color scheme for native calendar drop-down icon */
     input[type="date"]::-webkit-calendar-picker-indicator {
       filter: invert(1);
       cursor: pointer;
@@ -369,6 +368,11 @@
       padding: 8px 14px;
       border-radius: 8px;
       cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-booster:hover {
+      opacity: 0.9;
     }
 
     /* --- RECEIPT MODAL --- */
@@ -438,7 +442,7 @@
         <!-- 1. Kaleb Moon -->
         <div class="card">
           <div class="card-img-wrapper">
-            <img src="kalebmoon.jpg" alt="Kaleb Moon" onerror="this.src='https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=200&q=80'">
+            <img src="./kalebmoon.jpg" alt="Kaleb Moon" onerror="this.src='https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=200&q=80'">
           </div>
           <div class="card-title">Kaleb Moon</div>
           <div class="card-price">$10</div>
@@ -448,7 +452,7 @@
         <!-- 2. Maia Gold -->
         <div class="card">
           <div class="card-img-wrapper">
-            <img src="maiagold.jpg" alt="Maia Gold" onerror="this.src='https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?auto=format&fit=crop&w=200&q=80'">
+            <img src="./maiagold.jpg" alt="Maia Gold" onerror="this.src='https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?auto=format&fit=crop&w=200&q=80'">
           </div>
           <div class="card-title">Maia Gold</div>
           <div class="card-price">$11</div>
@@ -458,7 +462,7 @@
         <!-- 3. Lime Rush -->
         <div class="card">
           <div class="card-img-wrapper">
-            <img src="limerush.jpg" alt="Lime Rush" onerror="this.src='https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=200&q=80'">
+            <img src="./limerush.jpg" alt="Lime Rush" onerror="this.src='https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=200&q=80'">
           </div>
           <div class="card-title">Lime Rush</div>
           <div class="card-price">$10</div>
@@ -468,7 +472,7 @@
         <!-- 4. Cool Melon Crush -->
         <div class="card">
           <div class="card-img-wrapper">
-            <img src="coolmelon.jpg" alt="Cool Melon Crush" onerror="this.src='https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?auto=format&fit=crop&w=200&q=80'">
+            <img src="./coolmelon.jpg" alt="Cool Melon Crush" onerror="this.src='https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?auto=format&fit=crop&w=200&q=80'">
           </div>
           <div class="card-title">Cool Melon Crush</div>
           <div class="card-price">$11</div>
@@ -478,7 +482,7 @@
         <!-- 5. Berry Choc Whirl -->
         <div class="card">
           <div class="card-img-wrapper">
-            <img src="berrychocwhirl.jpg" alt="Berry Choc Whirl" onerror="this.src='https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=200&q=80'">
+            <img src="./berrychocwhirl.jpg" alt="Berry Choc Whirl" onerror="this.src='https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=200&q=80'">
           </div>
           <div class="card-title">Berry Choc Whirl</div>
           <div class="card-price">$10</div>
@@ -488,7 +492,7 @@
         <!-- 6. Dragon Berry Dream -->
         <div class="card">
           <div class="card-img-wrapper">
-            <img src="dragonberrydream.jpg" alt="Dragon Berry Dream" onerror="this.src='https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?auto=format&fit=crop&w=200&q=80'">
+            <img src="./dragonberrydream.jpg" alt="Dragon Berry Dream" onerror="this.src='https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?auto=format&fit=crop&w=200&q=80'">
           </div>
           <div class="card-title">Dragon Berry Dream</div>
           <div class="card-price">$11</div>
@@ -498,7 +502,7 @@
         <!-- 7. Kiwi Crisp -->
         <div class="card">
           <div class="card-img-wrapper">
-            <img src="kiwicrsp.jpg" alt="Kiwi Crisp" onerror="this.src='https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=200&q=80'">
+            <img src="./kiwicrsp.jpg" alt="Kiwi Crisp" onerror="this.src='https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=200&q=80'">
           </div>
           <div class="card-title">Kiwi Crisp</div>
           <div class="card-price">$10</div>
@@ -589,7 +593,7 @@
       <span style="font-size:0.8rem; color:var(--text-muted);">Total:</span>
       <span class="total-price" id="total-price-display">$0</span>
     </div>
-    <button class="btn-booster">Add Boosters</button>
+    <button class="btn-booster" onclick="goToBoosters()">Add Boosters</button>
   </div>
 
   <!-- QR RECEIPT MODAL -->
@@ -627,6 +631,11 @@
       });
       document.getElementById('total-price-display').innerText = '$' + total;
       return total;
+    }
+
+    function goToBoosters() {
+      const currentTotal = calculateTotal();
+      window.location.href = `addboosters.html?total=${currentTotal}`;
     }
 
     function generateReceipt() {
