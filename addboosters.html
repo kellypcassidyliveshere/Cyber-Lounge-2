@@ -1,348 +1,354 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Boosters - Cyber Lounge & Juice Bar</title>
-    <style>
-        :root {
-            --bg-color: #0d0e15;
-            --card-bg: #161824;
-            --text-color: #f0f0f8;
-            --green: #2ecc71;
-            --purple: #b15eff;
-            --accent-purple: #8a2be2;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Boosters - Cyber Lounge & Juice Bar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    body {
+      background-color: #0b0c10;
+      color: #ffffff;
+      padding-bottom: 100px; /* Space for sticky footer */
+      padding-top: 20px;
+    }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding: 20px 15px 90px;
-        }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
 
-        .header-title {
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--green);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 25px;
-        }
+    /* Flashing Purple Main Header */
+    .header-purple {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      animation: purpleFlash 1.2s infinite alternate;
+    }
 
-        .booster-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+    @keyframes purpleFlash {
+      0% {
+        color: #9900ff;
+        text-shadow: 0 0 5px #9900ff, 0 0 10px #9900ff;
+      }
+      100% {
+        color: #d880ff;
+        text-shadow: 0 0 15px #9900ff, 0 0 25px #9900ff;
+      }
+    }
 
-        .booster-card {
-            background: var(--card-bg);
-            border: 1px solid #272a3d;
-            border-radius: 12px;
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: border-color 0.2s, background-color 0.2s;
-        }
+    /* Boosters Grid / Card Style */
+    .booster-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
 
-        .booster-card.selected {
-            border-color: var(--green);
-            background-color: #1a232a;
-        }
+    .booster-card {
+      background: #12141d;
+      border: 2px solid #2a2d3d;
+      border-radius: 12px;
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
 
-        .booster-info {
-            padding-right: 15px;
-        }
+    .booster-card:hover {
+      border-color: #00d2ff;
+      box-shadow: 0 0 12px rgba(0, 210, 255, 0.2);
+    }
 
-        .booster-name {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 6px;
-        }
+    .booster-card.selected {
+      border-color: #00ff66;
+      background: #121f18;
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
+    }
 
-        .booster-desc {
-            font-size: 0.85rem;
-            color: #a0a5b5;
-            line-height: 1.3;
-        }
+    .booster-info {
+      padding-right: 15px;
+    }
 
-        .booster-action {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #888;
-            min-width: 30px;
-            text-align: center;
-        }
+    .booster-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #00d2ff; /* Standout Coloured Header */
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
 
-        .booster-card.selected .booster-action {
-            color: var(--green);
-        }
+    .booster-card.selected .booster-title {
+      color: #00ff66;
+    }
 
-        /* Fixed Footer */
-        .sticky-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 75px;
-            background: #11131f;
-            border-top: 2px solid var(--purple);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            z-index: 99;
-        }
+    .booster-desc {
+      font-size: 0.88rem;
+      color: #a0a5b5;
+      line-height: 1.4;
+    }
 
-        .total-display {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #fff;
-        }
+    .btn-add-toggle {
+      background: #1c1f2e;
+      border: 1px solid #33374c;
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      transition: 0.2s;
+    }
 
-        .total-amount {
-            color: var(--green);
-            font-size: 1.3rem;
-        }
+    .booster-card.selected .btn-add-toggle {
+      background: #00ff66;
+      color: #000;
+      border-color: #00ff66;
+    }
 
-        .btn-add-order {
-            background: var(--accent-purple);
-            color: #fff;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 0 10px rgba(138, 43, 226, 0.4);
-        }
-/* Pulsing Pink Text */
-.foundation-text {
-  font-size: 13px;
-  font-weight: bold;
-  color: #FF69B4;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-align: center;
-  animation: pinkTextPulse 2s infinite ease-in-out;
-  display: block;
-}
+    /* Sticky Footer */
+    .sticky-footer {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #090a0f;
+      border-top: 2px solid #2a2d3d;
+      padding: 12px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
 
-/* Green Link */
-.foundation-link {
-  font-size: 12px;
-  color: #00FF00;
-  text-decoration: underline;
-  font-weight: bold;
-  text-align: center;
-  display: block;
-  margin-top: 4px;
-}
+    .sticky-left {
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: bold;
+      max-width: 55%;
+      text-decoration: none;
+      line-height: 1.3;
+    }
 
-/* Pink Pulse Animation */
-@keyframes pinkTextPulse {
-  0%, 100% {
-    color: #FF69B4;
-    text-shadow: 0 0 5px rgba(255, 105, 180, 0.6);
-  }
-  50% {
-    color: #FF1493;
-    text-shadow: 0 0 15px rgba(255, 20, 147, 1), 0 0 8px rgba(255, 105, 180, 0.8);
-  }
-}
+    .green-link {
+      color: #00ff66;
+      text-decoration: underline;
+    }
 
+    .sticky-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-    </style>
+    .total-display {
+      color: #ffee00;
+      font-weight: bold;
+      font-size: 1.25rem;
+    }
+
+    .btn-add-order {
+      background: linear-gradient(90deg, #9900ff, #00d2ff);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      border: none;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(153, 0, 255, 0.4);
+    }
+  </style>
 </head>
 <body>
-<!-- PASTE THE BADGE HERE -->
-<div class="badge-container">
-  <!-- 1. Foundation Project Glow Ring (Halo) -->
-  <div class="foundation-halo"></div>
 
-  <!-- Badge Content -->
-  <div class="badge-core">
-    <span class="badge-title">PROFITS DONATED</span>
-    
-    <!-- 2. Foundation Project Text Reveal -->
-    <div class="foundation-reveal">
-      <span>10% Funding</span>
-      <a href="https://thefoundationproject.online" target="_blank" rel="noopener noreferrer">
-        thefoundationproject.online
-      </a>
+  <div class="container">
+    <!-- Flashing Bold Purple Header -->
+    <div class="header-purple">ADD BOOSTERS $2 EACH</div>
+
+    <!-- Booster Options List -->
+    <div class="booster-list">
+      
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">Vitamin C</div>
+          <div class="booster-desc">High-dose raw ascorbic acid for complete immune defense and antioxidant cell recovery.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">Collagen Peptides</div>
+          <div class="booster-desc">Pure hydrolysed bovine matrix to support joint structural load, skin elasticity, and cellular repair.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">Magnesium Glycinate</div>
+          <div class="booster-desc">High-absorption neural driver targeting muscle relaxation, stress modulation, and biological decompression.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">Electrolyte Blend</div>
+          <div class="booster-desc">Balanced hydration salts optimizing cellular fluid balance and preventing cramping during long grinds.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">Prebiotic Fibre</div>
+          <div class="booster-desc">Pure clean inulin fueling microflora stabilization, optimal nutrient digestion, and gut boundary health.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">Plant Protein Isolate</div>
+          <div class="booster-desc">Neutral premium amino structure to sustain physical stamina, muscle synthesis, and fullness curves.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">B-Complex</div>
+          <div class="booster-desc">Raw mitochondrial fuel compound supporting daily cellular energy pathways and clear cognitive processing.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">Zinc</div>
+          <div class="booster-desc">Standardized biological defense catalyst managing immune response integrity and cellular metabolic health.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">L-Glutamine</div>
+          <div class="booster-desc">Targeted amino acid sequence optimizing digestive wall density and accelerating post-exertion recovery.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">Omega-3 Microcaps</div>
+          <div class="booster-desc">Flavourless microencapsulated essential fatty acids prioritizing cardiovascular protection and neural network health.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">L-Carnitine</div>
+          <div class="booster-desc">Pure amino transport engine optimizing cellular fatty acid conversion into efficient, active energy output.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">Weight-Loss Support</div>
+          <div class="booster-desc">Thermogenic botanical blend containing active green tea matrices to accelerate metabolic efficiency safely.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">Nootropic Focus</div>
+          <div class="booster-desc">Alpha-GPC and L-Theanine neural stacks boosting deep gaming focus, processing speeds, and calm clarity.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
+      <div class="booster-card" onclick="toggleBooster(this)">
+        <div class="booster-info">
+          <div class="booster-title">Sleep Support</div>
+          <div class="booster-desc">Soothing active mineral and herbal matrix easing system parameters to promote deeper overnight REM rest cycles.</div>
+        </div>
+        <div class="btn-add-toggle"><i class="fas fa-plus"></i></div>
+      </div>
+
     </div>
   </div>
-</div>
 
-    <div class="header-title">ADD BOOSTER $2 EACH</div>
-
-    <div class="booster-list">
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">Vitamin C</div>
-                <div class="booster-desc">High-dose raw ascorbic acid for complete immune defense and antioxidant cell recovery.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">Collagen Peptides</div>
-                <div class="booster-desc">Pure hydrolysed bovine matrix to support joint structural load, skin elasticity, and cellular repair.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">Magnesium Glycinate</div>
-                <div class="booster-desc">High-absorption neural driver targeting muscle relaxation, stress modulation, and biological decompression.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">Electrolyte Blend</div>
-                <div class="booster-desc">Balanced hydration salts optimizing cellular fluid balance and preventing cramping during long grinds.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">Prebiotic Fibre</div>
-                <div class="booster-desc">Pure clean inulin fueling microflora stabilization, optimal nutrient digestion, and gut boundary health.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">Plant Protein Isolate</div>
-                <div class="booster-desc">Neutral premium amino structure to sustain physical stamina, muscle synthesis, and fullness curves.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">B-Complex</div>
-                <div class="booster-desc">Raw mitochondrial fuel compound supporting daily cellular energy pathways and clear cognitive processing.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">Zinc</div>
-                <div class="booster-desc">Standardized biological defense catalyst managing immune response integrity and cellular metabolic health.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">L-Glutamine</div>
-                <div class="booster-desc">Targeted amino acid sequence optimizing digestive wall density and accelerating post-exertion recovery.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">Omega-3 Microcaps</div>
-                <div class="booster-desc">Flavourless microencapsulated essential fatty acids prioritizing cardiovascular protection and neural network health.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">L-Carnitine</div>
-                <div class="booster-desc">Pure amino transport engine optimizing cellular fatty acid conversion into efficient, active energy output.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">Weight-Loss Support</div>
-                <div class="booster-desc">Thermogenic botanical blend containing active green tea matrices to accelerate metabolic efficiency safely.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">Nootropic Focus</div>
-                <div class="booster-desc">Alpha-GPC and L-Theanine neural stacks boosting deep gaming focus, processing speeds, and calm clarity.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
-
-        <div class="booster-card" onclick="toggleBooster(this)">
-            <div class="booster-info">
-                <div class="booster-name">Sleep Support</div>
-                <div class="booster-desc">Soothing active mineral and herbal matrix easing system parameters to promote deeper overnight REM rest cycles.</div>
-            </div>
-            <div class="booster-action">+</div>
-        </div>
+  <!-- STICKY FOOTER -->
+  <div class="sticky-footer">
+    <div class="sticky-left">
+      10% profits fund <a href="https://thefoundationproject.online" target="_blank" class="green-link">thefoundationproject.online</a>
     </div>
-
-    <!-- Fixed Footer -->
-    <div class="sticky-footer">
-        <div class="total-display">Total: <span id="total-price" class="total-amount">$0</span></div>
-        <a href="proceedpayment.html" class="btn-add-order">Add to Order</a>
+    <div class="sticky-right">
+      <div class="total-display">Total: $<span id="booster-total">0.00</span></div>
+      <button class="btn-add-order" onclick="submitBoostersOrder()">ADD TO ORDER</button>
     </div>
+  </div>
 
-    <script>
-        let baseTotal = 0;
-        let boosterCount = 0;
+  <script>
+    let basePrice = 0;
+    let selectedBoostersCount = 0;
 
-        window.onload = function() {
-            const savedTotal = localStorage.getItem('drinkTotal');
-            if (savedTotal) {
-                baseTotal = parseInt(savedTotal);
-            }
-            updateDisplay();
-        };
+    window.onload = function() {
+      // Retrieve the price carried over from index.html
+      const savedCartTotal = localStorage.getItem('cartTotal');
+      if (savedCartTotal) {
+        basePrice = parseFloat(savedCartTotal);
+      }
+      updateTotalDisplay();
+    };
 
-        function toggleBooster(card) {
-            const isSelected = card.classList.toggle('selected');
-            const actionBtn = card.querySelector('.booster-action');
+    function toggleBooster(cardElement) {
+      const isSelected = cardElement.classList.toggle('selected');
+      const toggleIcon = cardElement.querySelector('.btn-add-toggle i');
 
-            if (isSelected) {
-                actionBtn.innerText = '✓';
-                boosterCount++;
-            } else {
-                actionBtn.innerText = '+';
-                boosterCount--;
-            }
+      if (isSelected) {
+        toggleIcon.className = 'fas fa-check';
+        selectedBoostersCount++;
+      } else {
+        toggleIcon.className = 'fas fa-plus';
+        selectedBoostersCount--;
+      }
 
-            updateDisplay();
-        }
+      updateTotalDisplay();
+    }
 
-        function updateDisplay() {
-            const grandTotal = baseTotal + (boosterCount * 2);
-            document.getElementById('total-price').innerText = '$' + grandTotal;
-            localStorage.setItem('finalTotal', grandTotal);
-        }
-    </script>
+    function updateTotalDisplay() {
+      const currentTotal = basePrice + (selectedBoostersCount * 2);
+      document.getElementById('booster-total').textContent = currentTotal.toFixed(2);
+    }
+
+    function submitBoostersOrder() {
+      const finalTotal = basePrice + (selectedBoostersCount * 2);
+      localStorage.setItem('cartTotal', finalTotal.toFixed(2));
+      alert('Boosters added! Total updated to $' + finalTotal.toFixed(2));
+      window.location.href = 'index.html';
+    }
+  </script>
 </body>
 </html>
-
