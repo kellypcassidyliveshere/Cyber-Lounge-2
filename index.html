@@ -152,7 +152,21 @@
       display: block;
     }
 
-    /* Drinks Carousel Container - Swipe Right/Left */
+    /* Discount Banner Notice */
+    .discount-banner {
+      display: none;
+      background: linear-gradient(90deg, #ff007f, #9900ff);
+      color: #fff;
+      text-align: center;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+    }
+
+    /* Drinks Carousel Container */
     .carousel-wrapper {
       position: relative;
       width: 100%;
@@ -245,7 +259,7 @@
       accent-color: #00ff66;
     }
 
-    /* Description Modal */
+    /* Modals */
     .modal {
       display: none;
       position: fixed;
@@ -262,10 +276,12 @@
       border: 2px solid #00d2ff;
       border-radius: 16px;
       padding: 20px;
-      max-width: 400px;
+      max-width: 420px;
       width: 100%;
       text-align: center;
       position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     .close-modal {
@@ -312,6 +328,7 @@
     /* Forms & Inputs */
     .form-group {
       margin-bottom: 15px;
+      text-align: left;
     }
 
     .form-group label {
@@ -335,6 +352,49 @@
       display: flex;
       gap: 10px;
       margin-bottom: 15px;
+    }
+
+    .payment-methods-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .pay-btn {
+      background: #161824;
+      border: 1px solid #2a2d3d;
+      border-radius: 8px;
+      padding: 12px;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: 0.2s;
+    }
+
+    .pay-btn.selected {
+      border-color: #00ff66;
+      background: #00ff6622;
+      color: #00ff66;
+    }
+
+    .price-display-banner {
+      background: #12141d;
+      border: 1px solid #00d2ff;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .price-display-banner .amount {
+      font-size: 1.8rem;
+      color: #ffee00;
+      font-weight: bold;
     }
 
     .btn-submit {
@@ -486,7 +546,31 @@
       font-weight: bold;
       text-decoration: none;
       display: block;
-      margin-top: 15px;
+      margin-top: 10px;
+    }
+
+    .btn-add-drink-discount {
+      background: linear-gradient(90deg, #ff007f, #9900ff);
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      border: none;
+      width: 100%;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 0.95rem;
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
+    }
+
+    .checkbox-remember {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: #00d2ff;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -504,7 +588,7 @@
     <div class="hero-line line-3">JUICE BAR</div>
   </div>
 
-  <!-- Hero Picture Banner (Updated to mainpic.png) -->
+  <!-- Hero Picture Banner (mainpic.png) -->
   <div class="hero-banner">
     <img src="mainpic.png" alt="Cyber Lounge Juice Banner" onerror="this.src='https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80'">
   </div>
@@ -517,6 +601,9 @@
 
   <!-- DRINKS TAB CONTENT (Swipeable Carousel) -->
   <div id="drinks-tab" class="tab-content active">
+    <!-- Discount Active Banner -->
+    <div class="discount-banner" id="discountBanner">🎉 20% DISCOUNT APPLIED TO DRINKS!</div>
+
     <div class="carousel-wrapper">
       <div class="carousel-hint"><i class="fas fa-arrows-left-right"></i> Swipe to explore drinks menu</div>
       <div class="drinks-carousel">
@@ -527,7 +614,7 @@
           </div>
           <div class="drink-name">Kaleb Moon</div>
           <div class="drink-price">$10</div>
-          <input type="checkbox" class="drink-checkbox" value="10" data-name="Kaleb Moon" onchange="calculateTotal()">
+          <input type="checkbox" class="drink-checkbox" value="10" data-name="Kaleb Moon" onchange="calculateDrinkTotal()">
         </div>
 
         <!-- Drink Item 2 -->
@@ -537,7 +624,7 @@
           </div>
           <div class="drink-name">Maia Gold</div>
           <div class="drink-price">$11</div>
-          <input type="checkbox" class="drink-checkbox" value="11" data-name="Maia Gold" onchange="calculateTotal()">
+          <input type="checkbox" class="drink-checkbox" value="11" data-name="Maia Gold" onchange="calculateDrinkTotal()">
         </div>
 
         <!-- Drink Item 3 -->
@@ -547,7 +634,7 @@
           </div>
           <div class="drink-name">Kiwi Crisp</div>
           <div class="drink-price">$10</div>
-          <input type="checkbox" class="drink-checkbox" value="10" data-name="Kiwi Crisp" onchange="calculateTotal()">
+          <input type="checkbox" class="drink-checkbox" value="10" data-name="Kiwi Crisp" onchange="calculateDrinkTotal()">
         </div>
 
         <!-- Drink Item 4 -->
@@ -557,7 +644,7 @@
           </div>
           <div class="drink-name">Berry Choc Whirl</div>
           <div class="drink-price">$11</div>
-          <input type="checkbox" class="drink-checkbox" value="11" data-name="Berry Choc Whirl" onchange="calculateTotal()">
+          <input type="checkbox" class="drink-checkbox" value="11" data-name="Berry Choc Whirl" onchange="calculateDrinkTotal()">
         </div>
 
         <!-- Drink Item 5 -->
@@ -567,7 +654,7 @@
           </div>
           <div class="drink-name">Lime Rush</div>
           <div class="drink-price">$10</div>
-          <input type="checkbox" class="drink-checkbox" value="10" data-name="Lime Rush" onchange="calculateTotal()">
+          <input type="checkbox" class="drink-checkbox" value="10" data-name="Lime Rush" onchange="calculateDrinkTotal()">
         </div>
 
         <!-- Drink Item 6 -->
@@ -577,7 +664,7 @@
           </div>
           <div class="drink-name">Cool Melon Rush</div>
           <div class="drink-price">$11</div>
-          <input type="checkbox" class="drink-checkbox" value="11" data-name="Cool Melon Rush" onchange="calculateTotal()">
+          <input type="checkbox" class="drink-checkbox" value="11" data-name="Cool Melon Rush" onchange="calculateDrinkTotal()">
         </div>
 
         <!-- Drink Item 7 -->
@@ -587,7 +674,7 @@
           </div>
           <div class="drink-name">Dragon Berry Dream</div>
           <div class="drink-price">$11</div>
-          <input type="checkbox" class="drink-checkbox" value="11" data-name="Dragon Berry Dream" onchange="calculateTotal()">
+          <input type="checkbox" class="drink-checkbox" value="11" data-name="Dragon Berry Dream" onchange="calculateDrinkTotal()">
         </div>
       </div>
     </div>
@@ -634,7 +721,7 @@
       <input type="text" id="bookName" class="form-control" placeholder="Enter your name">
     </div>
 
-    <button class="btn-submit" onclick="proceedToPayment()">Proceed to Payment</button>
+    <button class="btn-submit" onclick="openPaymentModal()">Proceed to Payment</button>
   </div>
 
   <!-- JOIN COMMUNITY FORMSPREE BOX -->
@@ -658,13 +745,13 @@
     <div class="copyright">Copyright © Infinity Link 2026</div>
   </div>
 
-  <!-- STICKY FOOTER -->
+  <!-- STICKY FOOTER (DRINKS TOTAL ONLY) -->
   <div class="sticky-footer">
     <a href="https://thefoundationproject.online" target="_blank" class="sticky-left">
       10% of all profits fund thefoundationproject.online
     </a>
     <div class="sticky-right">
-      <div class="total-display">Total: $<span id="total-price">0</span></div>
+      <div class="total-display">Total: $<span id="total-price">0.00</span></div>
       <a href="addboosters.html" class="btn-booster" id="booster-btn">Add Boosters</a>
     </div>
   </div>
@@ -678,6 +765,46 @@
     </div>
   </div>
 
+  <!-- PAYMENT SELECTION MODAL -->
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closePaymentModal()">&times;</span>
+      <h3 style="color: #00d2ff; margin-bottom: 10px;">CHECKOUT</h3>
+
+      <div class="price-display-banner">
+        <div style="color: #a0a5b5; font-size: 0.9rem;">Price</div>
+        <div class="amount">$<span id="payModalAmount">10</span></div>
+      </div>
+
+      <div style="color: #fff; font-weight: bold; margin-bottom: 10px; text-align: left;">Select a Payment Method</div>
+      <div class="payment-methods-grid">
+        <button class="pay-btn selected" id="pay-gpay" onclick="selectPayMethod('Google Pay')">
+          <i class="fab fa-google-pay"></i> Google Pay
+        </button>
+        <button class="pay-btn" id="pay-apple" onclick="selectPayMethod('Apple Pay')">
+          <i class="fab fa-apple-pay"></i> Apple Pay
+        </button>
+        <button class="pay-btn" id="pay-card" onclick="selectPayMethod('Credit Card')">
+          <i class="fas fa-credit-card"></i> Credit Card
+        </button>
+        <button class="pay-btn" id="pay-cash" onclick="selectPayMethod('Cash')">
+          <i class="fas fa-money-bill-wave"></i> Cash
+        </button>
+      </div>
+
+      <div id="cardDetailsGroup" class="form-group" style="margin-top: 15px;">
+        <label>Payment Details</label>
+        <input type="text" class="form-control" placeholder="Card / Account Info" id="payDetailsInput">
+      </div>
+
+      <label class="checkbox-remember">
+        <input type="checkbox" id="rememberCredentials" checked> Save preference for faster 1-click checkout
+      </label>
+
+      <button class="btn-submit" style="background: #00ff66; color: #000;" onclick="submitFinalPayment()">Submit Payment</button>
+    </div>
+  </div>
+
   <!-- RECEIPT / QR MODAL -->
   <div id="receiptModal" class="modal">
     <div class="modal-content">
@@ -686,15 +813,26 @@
         <div id="qrcode"></div>
         <div class="receipt-details" id="receiptDetails"></div>
       </div>
+      <button class="btn-add-drink-discount" onclick="applyDiscountAndReturnToDrinks()">ADD A DRINK (20% OFF)</button>
       <a href="gamerslounge.html" class="btn-gaming-lounge">ENTER GAMERS LOUNGE</a>
     </div>
   </div>
 
   <script>
     let selectedPod = null;
-    let podPrice = 0;
+    let podPrice = 10;
+    let selectedPaymentMethod = 'Google Pay';
+    let discountRate = 1.0;
 
-    // Populate Time Select Options (11 AM to 11 PM)
+    // Load saved payment details if available
+    window.onload = function() {
+      const savedName = localStorage.getItem('savedCustomerName');
+      if (savedName) {
+        document.getElementById('bookName').value = savedName;
+      }
+    };
+
+    // Populate Time Options
     const timeSelect = document.getElementById('bookTime');
     for (let hour = 11; hour <= 23; hour++) {
       let displayHour = hour > 12 ? hour - 12 : hour;
@@ -706,10 +844,8 @@
       timeSelect.appendChild(option);
     }
 
-    // Set Default Date To Today
     document.getElementById('bookDate').valueAsDate = new Date();
 
-    // Tab Switching Function
     function switchTab(tabName) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
@@ -723,7 +859,6 @@
       }
     }
 
-    // Fruit Description Modal
     function showFruitModal(title, desc) {
       document.getElementById('modalTitle').textContent = title;
       document.getElementById('modalDesc').textContent = desc;
@@ -734,23 +869,21 @@
       document.getElementById('fruitModal').style.display = 'none';
     }
 
-    // Dynamic Total Calculation
-    function calculateTotal() {
+    function calculateDrinkTotal() {
       let drinkTotal = 0;
       let drinkSelected = false;
 
       document.querySelectorAll('.drink-checkbox:checked').forEach(cb => {
-        drinkTotal += parseFloat(cb.value);
+        let originalPrice = parseFloat(cb.value);
+        let discountedPrice = originalPrice * discountRate;
+        drinkTotal += discountedPrice;
         drinkSelected = true;
       });
 
-      let grandTotal = drinkTotal + podPrice;
-      document.getElementById('total-price').textContent = grandTotal;
+      let formattedTotal = drinkTotal.toFixed(2);
+      document.getElementById('total-price').textContent = formattedTotal;
+      localStorage.setItem('cartTotal', formattedTotal);
 
-      // Persist total price for addboosters.html
-      localStorage.setItem('cartTotal', grandTotal);
-
-      // Flashing Blue Effect for ADD BOOSTERS button when drinks selected
       const boosterBtn = document.getElementById('booster-btn');
       if (drinkSelected) {
         boosterBtn.classList.add('flashing');
@@ -759,34 +892,31 @@
       }
     }
 
-    // Pod Selection logic
+    function applyDiscountAndReturnToDrinks() {
+      discountRate = 0.8;
+      document.getElementById('receiptModal').style.display = 'none';
+      document.getElementById('discountBanner').style.display = 'block';
+
+      document.querySelectorAll('.drink-checkbox').forEach(cb => cb.checked = false);
+      calculateDrinkTotal();
+
+      switchTab('drinks');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function selectPod(podNum) {
       document.querySelectorAll('.pod-box').forEach(box => box.classList.remove('selected'));
       document.getElementById(`pod-${podNum}`).classList.add('selected');
       selectedPod = podNum;
-      updatePodPrice();
     }
 
     function toggleMemberField(isMember) {
       document.getElementById('memberField').style.display = isMember ? 'block' : 'none';
-      updatePodPrice();
-    }
-
-    function updatePodPrice() {
-      if (!selectedPod) return;
-      const isMember = document.querySelector('input[name="custType"]:checked').value === 'member';
       podPrice = isMember ? 7 : 10;
-      calculateTotal();
     }
 
-    // Proceed to Payment & QR Generator
-    function proceedToPayment() {
+    function openPaymentModal() {
       const name = document.getElementById('bookName').value;
-      const date = document.getElementById('bookDate').value;
-      const time = document.getElementById('bookTime').value;
-      const isMember = document.querySelector('input[name="custType"]:checked').value === 'member';
-      const memberNum = isMember ? document.getElementById('memberNum').value : 'N/A';
-
       if (!selectedPod) {
         alert('Please select a Pod first.');
         return;
@@ -796,8 +926,54 @@
         return;
       }
 
+      // Ask user if they'd like to use saved credentials if available
+      const savedMethod = localStorage.getItem('savedPaymentMethod');
+      const savedName = localStorage.getItem('savedCustomerName');
+
+      if (savedMethod && savedName && savedName === name) {
+        const useSaved = confirm(`Use saved payment preference (${savedMethod}) for ${savedName}?`);
+        if (useSaved) {
+          selectPayMethod(savedMethod);
+        }
+      }
+
+      const isMember = document.querySelector('input[name="custType"]:checked').value === 'member';
+      podPrice = isMember ? 7 : 10;
+
+      document.getElementById('payModalAmount').textContent = podPrice;
+      document.getElementById('paymentModal').style.display = 'flex';
+    }
+
+    function closePaymentModal() {
+      document.getElementById('paymentModal').style.display = 'none';
+    }
+
+    function selectPayMethod(method) {
+      selectedPaymentMethod = method;
+      document.querySelectorAll('.pay-btn').forEach(btn => btn.classList.remove('selected'));
+      
+      if (method === 'Google Pay') document.getElementById('pay-gpay').classList.add('selected');
+      if (method === 'Apple Pay') document.getElementById('pay-apple').classList.add('selected');
+      if (method === 'Credit Card') document.getElementById('pay-card').classList.add('selected');
+      if (method === 'Cash') document.getElementById('pay-cash').classList.add('selected');
+    }
+
+    function submitFinalPayment() {
+      const name = document.getElementById('bookName').value;
+      const date = document.getElementById('bookDate').value;
+      const time = document.getElementById('bookTime').value;
+      const isMember = document.querySelector('input[name="custType"]:checked').value === 'member';
+      const memberNum = isMember ? document.getElementById('memberNum').value : 'N/A';
+      const remember = document.getElementById('rememberCredentials').checked;
+
+      if (remember) {
+        localStorage.setItem('savedCustomerName', name);
+        localStorage.setItem('savedPaymentMethod', selectedPaymentMethod);
+      }
+
+      closePaymentModal();
+
       const receiptNum = 'REC-' + Math.floor(100000 + Math.random() * 900000);
-      const currentTotal = document.getElementById('total-price').textContent;
 
       const receiptDetails = `
         <strong>Receipt #:</strong> ${receiptNum}<br>
@@ -805,15 +981,15 @@
         <strong>Member #:</strong> ${memberNum}<br>
         <strong>Pod Selected:</strong> Pod ${selectedPod}<br>
         <strong>Date & Time:</strong> ${date} @ ${time}<br>
-        <strong>Total Paid:</strong> $${currentTotal}
+        <strong>Payment Method:</strong> ${selectedPaymentMethod}<br>
+        <strong>Total Paid:</strong> $${podPrice}
       `;
 
       document.getElementById('receiptDetails').innerHTML = receiptDetails;
 
-      // Clear & generate QR Code
       document.getElementById('qrcode').innerHTML = '';
       new QRCode(document.getElementById('qrcode'), {
-        text: `Receipt:${receiptNum}|Name:${name}|Pod:${selectedPod}|Price:$${currentTotal}`,
+        text: `Receipt:${receiptNum}|Name:${name}|Pod:${selectedPod}|Price:$${podPrice}|Method:${selectedPaymentMethod}`,
         width: 140,
         height: 140
       });
