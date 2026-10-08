@@ -3,225 +3,304 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Select Payment Method</title>
-  <!-- QRCode.js Library -->
+  <title>Proceed Payment - Cyber Lounge</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     * {
       box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
     body {
-      background-color: #0d0d0f;
+      background-color: #0b0c10;
       color: #ffffff;
+      padding: 30px 15px;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      margin: 0;
-      padding: 16px;
     }
-    .card {
-      background-color: #16161e;
+
+    .payment-card {
+      background: #12141d;
+      border: 2px solid #2a2d3d;
       border-radius: 16px;
-      padding: 24px;
       width: 100%;
-      max-width: 400px;
+      max-width: 480px;
+      padding: 24px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
-    h2 {
+
+    .title {
       color: #00ff66;
       text-align: center;
-      margin-top: 0;
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: 1px;
       margin-bottom: 20px;
-      font-size: 1.25rem;
-      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
-    .price-display {
+
+    .total-box {
+      background: #1a1d2b;
+      border-radius: 10px;
+      padding: 15px;
       text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
+      font-size: 1.6rem;
+      font-weight: 800;
       color: #ffffff;
       margin-bottom: 20px;
-      background: #20202c;
-      padding: 12px;
-      border-radius: 8px;
+      border: 1px solid #2d3248;
     }
-    .input-group {
-      margin-bottom: 20px;
+
+    .form-group {
+      margin-bottom: 18px;
     }
-    .input-group label {
+
+    .form-group label {
       display: block;
-      margin-bottom: 8px;
       font-size: 0.9rem;
-      color: #a0a0b0;
+      color: #a0a5b5;
+      margin-bottom: 8px;
+      font-weight: 600;
     }
-    .input-group input {
+
+    .form-control {
       width: 100%;
-      padding: 12px;
+      background: #1a1d2b;
+      border: 1px solid #33374c;
       border-radius: 8px;
-      border: 1px solid #2e2e3e;
-      background-color: #20202c;
+      padding: 12px 14px;
       color: #fff;
       font-size: 1rem;
       outline: none;
+      transition: border-color 0.2s;
     }
-    .input-group input:focus {
+
+    .form-control:focus {
       border-color: #00ff66;
     }
-    .payment-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .method-btn {
-      background-color: #20202c;
-      border: 1px solid transparent;
-      color: #ffffff;
-      padding: 14px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
+
+    /* Option Toggle Buttons */
+    .option-grid {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.2s ease;
+      gap: 10px;
+      margin-bottom: 18px;
     }
-    .method-btn.selected {
-      border-color: #00ff66;
-      background-color: #282838;
-    }
-    .action-btn {
-      width: 100%;
-      background-color: #00ff66;
-      color: #000000;
-      border: none;
-      padding: 16px;
-      border-radius: 10px;
+
+    .opt-btn {
+      flex: 1;
+      padding: 12px;
+      background: #1a1d2b;
+      border: 1px solid #33374c;
+      border-radius: 8px;
+      color: #fff;
       font-weight: bold;
-      font-size: 1rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .opt-btn.active {
+      background: #12281d;
+      border-color: #00ff66;
+      color: #00ff66;
+    }
+
+    .address-wrapper {
+      display: none;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: #00ff66;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 1.1rem;
+      font-weight: 900;
       cursor: pointer;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
+      transition: background 0.2s;
+      margin-top: 10px;
     }
-    .action-btn:hover {
-      background-color: #00e65c;
+
+    .btn-submit:hover {
+      background: #00cc52;
     }
-    /* Receipt Styles */
+
+    /* Receipt & QR Container */
     #receipt-section {
       display: none;
+      margin-top: 25px;
+      background: #1a1d2b;
+      border: 1px dashed #00ff66;
+      border-radius: 12px;
+      padding: 20px;
       text-align: center;
     }
-    .qrcode-container {
-      background: #ffffff;
-      padding: 16px;
-      border-radius: 12px;
-      display: inline-block;
-      margin: 16px 0;
+
+    .receipt-title {
+      color: #00ff66;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
     }
+
     .receipt-details {
       font-size: 0.9rem;
-      color: #a0a0b0;
-      margin-bottom: 20px;
+      color: #d1d5db;
+      text-align: left;
+      margin-bottom: 15px;
       line-height: 1.6;
     }
-    .receipt-details strong {
-      color: #ffffff;
+
+    #qrcode {
+      display: flex;
+      justify-content: center;
+      margin: 15px 0;
+    }
+
+    #qrcode img {
+      padding: 8px;
+      background: #fff;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Payment Selection State -->
-  <div class="card" id="payment-card">
-    <h2>SELECT PAYMENT METHOD</h2>
-
-    <div class="price-display">
-      Total: $<span id="total-amount">0.00</span>
-    </div>
-
-    <div class="input-group">
-      <label for="username">Gamer Username</label>
-      <input type="text" id="username" placeholder="Enter your username" required />
-    </div>
-
-    <div class="payment-grid">
-      <button class="method-btn selected" type="button" onclick="selectMethod(this)">💳 Google Pay</button>
-      <button class="method-btn" type="button" onclick="selectMethod(this)">🍎 Apple Pay</button>
-      <button class="method-btn" type="button" onclick="selectMethod(this)">💳 Credit Card</button>
-      <button class="method-btn" type="button" onclick="selectMethod(this)">💵 Cash at Bar</button>
-    </div>
-
-    <button class="action-btn" onclick="processPayment()">Complete Payment</button>
-  </div>
-
-  <!-- Receipt State -->
-  <div class="card" id="receipt-section">
-    <h2>PAYMENT SUCCESSFUL</h2>
+  <div class="payment-card">
+    <div class="title">Select Payment Method</div>
     
-    <div class="qrcode-container" id="qrcode"></div>
-
-    <div class="receipt-details">
-      <div>Receipt #: <strong id="receipt-num"></strong></div>
-      <div>Username: <strong id="display-username"></strong></div>
-      <div>Amount Paid: <strong id="display-amount"></strong></div>
+    <div class="total-box">
+      Total: $<span id="display-total">0.00</span>
     </div>
 
-    <button class="action-btn" onclick="location.href='gamerslounge.html'">Enter Gamers Lounge</button>
+    <div class="form-group">
+      <label for="cust-name">Full Name</label>
+      <input type="text" id="cust-name" class="form-control" placeholder="Enter your name" required>
+    </div>
+
+    <!-- Fulfillment Selection -->
+    <div class="form-group">
+      <label>Fulfillment Option</label>
+      <div class="option-grid">
+        <button type="button" class="opt-btn active" id="btn-pickup" onclick="selectFulfillment('pickup')">
+          <i class="fas fa-store"></i> Pick Up
+        </button>
+        <button type="button" class="opt-btn" id="btn-delivery" onclick="selectFulfillment('delivery')">
+          <i class="fas fa-truck"></i> Delivery (+$7)
+        </button>
+      </div>
+    </div>
+
+    <!-- Delivery Address Input -->
+    <div class="form-group address-wrapper" id="address-box">
+      <label for="cust-address">Delivery Address</label>
+      <input type="text" id="cust-address" class="form-control" placeholder="Enter street address & suburb">
+    </div>
+
+    <button type="button" class="btn-submit" onclick="processPayment()">Submit Payment</button>
+
+    <!-- Receipt Output & QR Code -->
+    <div id="receipt-section">
+      <div class="receipt-title"><i class="fas fa-check-circle"></i> Order Confirmed!</div>
+      <div class="receipt-details" id="receipt-text"></div>
+      <div id="qrcode"></div>
+      <p style="font-size: 0.8rem; color: #a0a5b5;">Scan or save this QR code receipt for your records.</p>
+    </div>
   </div>
 
   <script>
-    // 1. Get total price passed from URL (e.g. payment.html?total=15.00)
-    const urlParams = new URLSearchParams(window.location.search);
-    const total = urlParams.get('total') || '0.00';
-    document.getElementById('total-amount').textContent = parseFloat(total).toFixed(2);
+    let baseCartTotal = 0.00;
+    let deliveryFee = 0.00;
+    let currentFulfillment = 'pickup';
 
-    // 2. Payment Method Selection Handler
-    function selectMethod(element) {
-      document.querySelectorAll('.method-btn').forEach(btn => btn.classList.remove('selected'));
-      element.classList.add('selected');
+    window.onload = function() {
+      const savedTotal = localStorage.getItem('cartTotal');
+      if (savedTotal) {
+        baseCartTotal = parseFloat(savedTotal);
+      }
+      updateTotal();
+    };
+
+    function selectFulfillment(mode) {
+      currentFulfillment = mode;
+      const btnPickup = document.getElementById('btn-pickup');
+      const btnDelivery = document.getElementById('btn-delivery');
+      const addressBox = document.getElementById('address-box');
+
+      if (mode === 'delivery') {
+        btnDelivery.classList.add('active');
+        btnPickup.classList.remove('active');
+        addressBox.style.display = 'block';
+        deliveryFee = 7.00;
+      } else {
+        btnPickup.classList.add('active');
+        btnDelivery.classList.remove('active');
+        addressBox.style.display = 'none';
+        deliveryFee = 0.00;
+      }
+      updateTotal();
     }
 
-    // 3. Process Payment & Generate Receipt
+    function updateTotal() {
+      const grandTotal = baseCartTotal + deliveryFee;
+      document.getElementById('display-total').textContent = grandTotal.toFixed(2);
+    }
+
     function processPayment() {
-      const usernameInput = document.getElementById('username').value.trim();
-      
-      if (!usernameInput) {
-        alert('Please enter your username before proceeding.');
+      const name = document.getElementById('cust-name').value.trim();
+      const address = document.getElementById('cust-address').value.trim();
+
+      if (!name) {
+        alert('Please enter your name.');
         return;
       }
 
-      // Generate random receipt number
-      const receiptNumber = 'REC-' + Math.floor(100000 + Math.random() * 900000);
+      if (currentFulfillment === 'delivery' && !address) {
+        alert('Please enter your delivery address.');
+        return;
+      }
 
-      // Populate Receipt Details
-      document.getElementById('receipt-num').textContent = receiptNumber;
-      document.getElementById('display-username').textContent = usernameInput;
-      document.getElementById('display-amount').textContent = '$' + parseFloat(total).toFixed(2);
+      const grandTotal = (baseCartTotal + deliveryFee).toFixed(2);
+      const receiptSection = document.getElementById('receipt-section');
+      const receiptText = document.getElementById('receipt-text');
+      const qrcodeDiv = document.getElementById('qrcode');
 
-      // Generate QR Code containing receipt data JSON
-      const qrData = JSON.stringify({
-        receipt: receiptNumber,
-        user: usernameInput,
-        amount: total,
-        status: "PAID"
-      });
+      // Clear existing QR code
+      qrcodeDiv.innerHTML = "";
 
-      new QRCode(document.getElementById("qrcode"), {
+      // Format Receipt Details
+      const orderSummary = `
+        <strong>Name:</strong> ${name}<br>
+        <strong>Option:</strong> ${currentFulfillment.toUpperCase()}<br>
+        ${currentFulfillment === 'delivery' ? `<strong>Address:</strong> ${address}<br>` : ''}
+        <strong>Total Paid:</strong> $${grandTotal}
+      `;
+      receiptText.innerHTML = orderSummary;
+
+      // QR Code payload text
+      const qrData = `RECEIPT | Name: ${name} | Total: $${grandTotal} | Mode: ${currentFulfillment} ${currentFulfillment === 'delivery' ? '| Addr: ' + address : ''}`;
+
+      new QRCode(qrcodeDiv, {
         text: qrData,
-        width: 160,
-        height: 160,
+        width: 140,
+        height: 140,
         colorDark : "#000000",
         colorLight : "#ffffff",
         correctLevel : QRCode.CorrectLevel.H
       });
 
-      // Hide payment form and show receipt
-      document.getElementById('payment-card').style.display = 'none';
-      document.getElementById('receipt-section').style.display = 'block';
+      receiptSection.style.display = 'block';
+      receiptSection.scrollIntoView({ behavior: 'smooth' });
     }
   </script>
 </body>
