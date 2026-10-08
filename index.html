@@ -152,15 +152,46 @@
       display: block;
     }
 
-    /* Drinks Menu Grid - Animated Slide-In */
-    .drinks-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+    /* Drinks Carousel Container - Swipe Right/Left */
+    .carousel-wrapper {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .carousel-hint {
+      text-align: center;
+      color: #00d2ff;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .drinks-carousel {
+      display: flex;
       gap: 15px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding: 10px 5px 20px;
+      -webkit-overflow-scrolling: touch;
       animation: swipeFromRight 1s ease-out;
     }
 
+    .drinks-carousel::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .drinks-carousel::-webkit-scrollbar-thumb {
+      background: #00d2ff;
+      border-radius: 10px;
+    }
+
     .drink-card {
+      min-width: 160px;
+      max-width: 180px;
+      flex: 0 0 auto;
+      scroll-snap-align: start;
       background: #161824;
       border: 1px solid #2a2d3d;
       border-radius: 16px;
@@ -197,7 +228,7 @@
     .drink-name {
       margin-top: 10px;
       font-weight: bold;
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: #fff;
     }
 
@@ -473,9 +504,9 @@
     <div class="hero-line line-3">JUICE BAR</div>
   </div>
 
-  <!-- Hero Picture Banner -->
+  <!-- Hero Picture Banner (Updated to mainpic.png) -->
   <div class="hero-banner">
-    <img src="mainpic.jpg" alt="Cyber Lounge Juice Banner" onerror="this.src='https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80'">
+    <img src="mainpic.png" alt="Cyber Lounge Juice Banner" onerror="this.src='https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80'">
   </div>
 
   <!-- Tabs Nav Header -->
@@ -484,77 +515,80 @@
     <button class="tab-btn" onclick="switchTab('pods')">Pods</button>
   </div>
 
-  <!-- DRINKS TAB CONTENT -->
+  <!-- DRINKS TAB CONTENT (Swipeable Carousel) -->
   <div id="drinks-tab" class="tab-content active">
-    <div class="drinks-grid">
-      <!-- Drink Item 1 -->
-      <div class="drink-card">
-        <div class="circle-box" onclick="showFruitModal('Kaleb Moon', 'A refreshing blend of Lychee, Green Apple, and Sweet Grapes.')">
-          <img src="kalebmoon.jpg" alt="Kaleb Moon" onerror="this.src='https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=200&q=80'">
+    <div class="carousel-wrapper">
+      <div class="carousel-hint"><i class="fas fa-arrows-left-right"></i> Swipe to explore drinks menu</div>
+      <div class="drinks-carousel">
+        <!-- Drink Item 1 -->
+        <div class="drink-card">
+          <div class="circle-box" onclick="showFruitModal('Kaleb Moon', 'A refreshing blend of Lychee, Green Apple, and Sweet Grapes.')">
+            <img src="kalebmoon.jpg" alt="Kaleb Moon" onerror="this.src='https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=200&q=80'">
+          </div>
+          <div class="drink-name">Kaleb Moon</div>
+          <div class="drink-price">$10</div>
+          <input type="checkbox" class="drink-checkbox" value="10" data-name="Kaleb Moon" onchange="calculateTotal()">
         </div>
-        <div class="drink-name">Kaleb Moon</div>
-        <div class="drink-price">$10</div>
-        <input type="checkbox" class="drink-checkbox" value="10" data-name="Kaleb Moon" onchange="calculateTotal()">
-      </div>
 
-      <!-- Drink Item 2 -->
-      <div class="drink-card">
-        <div class="circle-box" onclick="showFruitModal('Maia Gold', 'Tropical Pineapple, Golden Mango, and ripe Banana fusion.')">
-          <img src="maiagold.jpg" alt="Maia Gold" onerror="this.src='https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=200&q=80'">
+        <!-- Drink Item 2 -->
+        <div class="drink-card">
+          <div class="circle-box" onclick="showFruitModal('Maia Gold', 'Tropical Pineapple, Golden Mango, and ripe Banana fusion.')">
+            <img src="maiagold.jpg" alt="Maia Gold" onerror="this.src='https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=200&q=80'">
+          </div>
+          <div class="drink-name">Maia Gold</div>
+          <div class="drink-price">$11</div>
+          <input type="checkbox" class="drink-checkbox" value="11" data-name="Maia Gold" onchange="calculateTotal()">
         </div>
-        <div class="drink-name">Maia Gold</div>
-        <div class="drink-price">$11</div>
-        <input type="checkbox" class="drink-checkbox" value="11" data-name="Maia Gold" onchange="calculateTotal()">
-      </div>
 
-      <!-- Drink Item 3 -->
-      <div class="drink-card">
-        <div class="circle-box" onclick="showFruitModal('Kiwi Crisp', 'Zesty Kiwi, Crisp Green Apple, and refreshing Mint.')">
-          <img src="kiwicrisp.jpg" alt="Kiwi Crisp" onerror="this.src='https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?auto=format&fit=crop&w=200&q=80'">
+        <!-- Drink Item 3 -->
+        <div class="drink-card">
+          <div class="circle-box" onclick="showFruitModal('Kiwi Crisp', 'Zesty Kiwi, Crisp Green Apple, and refreshing Mint.')">
+            <img src="kiwicrisp.jpg" alt="Kiwi Crisp" onerror="this.src='https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?auto=format&fit=crop&w=200&q=80'">
+          </div>
+          <div class="drink-name">Kiwi Crisp</div>
+          <div class="drink-price">$10</div>
+          <input type="checkbox" class="drink-checkbox" value="10" data-name="Kiwi Crisp" onchange="calculateTotal()">
         </div>
-        <div class="drink-name">Kiwi Crisp</div>
-        <div class="drink-price">$10</div>
-        <input type="checkbox" class="drink-checkbox" value="10" data-name="Kiwi Crisp" onchange="calculateTotal()">
-      </div>
 
-      <!-- Drink Item 4 -->
-      <div class="drink-card">
-        <div class="circle-box" onclick="showFruitModal('Berry Choc Whirl', 'Rich Dark Berry Medley swirled with Cocoa Bean extract.')">
-          <img src="berrychocwhirl.jpg" alt="Berry Choc Whirl" onerror="this.src='https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=200&q=80'">
+        <!-- Drink Item 4 -->
+        <div class="drink-card">
+          <div class="circle-box" onclick="showFruitModal('Berry Choc Whirl', 'Rich Dark Berry Medley swirled with Cocoa Bean extract.')">
+            <img src="berrychocwhirl.jpg" alt="Berry Choc Whirl" onerror="this.src='https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=200&q=80'">
+          </div>
+          <div class="drink-name">Berry Choc Whirl</div>
+          <div class="drink-price">$11</div>
+          <input type="checkbox" class="drink-checkbox" value="11" data-name="Berry Choc Whirl" onchange="calculateTotal()">
         </div>
-        <div class="drink-name">Berry Choc Whirl</div>
-        <div class="drink-price">$11</div>
-        <input type="checkbox" class="drink-checkbox" value="11" data-name="Berry Choc Whirl" onchange="calculateTotal()">
-      </div>
 
-      <!-- Drink Item 5 -->
-      <div class="drink-card">
-        <div class="circle-box" onclick="showFruitModal('Lime Rush', 'Electric Lime, Tangy Lemon, and Agave Nectar splash.')">
-          <img src="limerush.jpg" alt="Lime Rush" onerror="this.src='https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=200&q=80'">
+        <!-- Drink Item 5 -->
+        <div class="drink-card">
+          <div class="circle-box" onclick="showFruitModal('Lime Rush', 'Electric Lime, Tangy Lemon, and Agave Nectar splash.')">
+            <img src="limerush.jpg" alt="Lime Rush" onerror="this.src='https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=200&q=80'">
+          </div>
+          <div class="drink-name">Lime Rush</div>
+          <div class="drink-price">$10</div>
+          <input type="checkbox" class="drink-checkbox" value="10" data-name="Lime Rush" onchange="calculateTotal()">
         </div>
-        <div class="drink-name">Lime Rush</div>
-        <div class="drink-price">$10</div>
-        <input type="checkbox" class="drink-checkbox" value="10" data-name="Lime Rush" onchange="calculateTotal()">
-      </div>
 
-      <!-- Drink Item 6 -->
-      <div class="drink-card">
-        <div class="circle-box" onclick="showFruitModal('Cool Melon Rush', 'Hydrating Watermelon, Sweet Honeydew, and Iced Cucumber.')">
-          <img src="coolmelonrush.jpg" alt="Cool Melon Rush" onerror="this.src='https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?auto=format&fit=crop&w=200&q=80'">
+        <!-- Drink Item 6 -->
+        <div class="drink-card">
+          <div class="circle-box" onclick="showFruitModal('Cool Melon Rush', 'Hydrating Watermelon, Sweet Honeydew, and Iced Cucumber.')">
+            <img src="coolmelonrush.jpg" alt="Cool Melon Rush" onerror="this.src='https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?auto=format&fit=crop&w=200&q=80'">
+          </div>
+          <div class="drink-name">Cool Melon Rush</div>
+          <div class="drink-price">$11</div>
+          <input type="checkbox" class="drink-checkbox" value="11" data-name="Cool Melon Rush" onchange="calculateTotal()">
         </div>
-        <div class="drink-name">Cool Melon Rush</div>
-        <div class="drink-price">$11</div>
-        <input type="checkbox" class="drink-checkbox" value="11" data-name="Cool Melon Rush" onchange="calculateTotal()">
-      </div>
 
-      <!-- Drink Item 7 -->
-      <div class="drink-card">
-        <div class="circle-box" onclick="showFruitModal('Dragon Berry Dream', 'Exotic Dragonfruit, Wild Strawberries, and Passionfruit splash.')">
-          <img src="dragonberrydream.jpg" alt="Dragon Berry Dream" onerror="this.src='https://images.unsplash.com/photo-1525385133512-2f3bdd039054?auto=format&fit=crop&w=200&q=80'">
+        <!-- Drink Item 7 -->
+        <div class="drink-card">
+          <div class="circle-box" onclick="showFruitModal('Dragon Berry Dream', 'Exotic Dragonfruit, Wild Strawberries, and Passionfruit splash.')">
+            <img src="dragonberrydream.jpg" alt="Dragon Berry Dream" onerror="this.src='https://images.unsplash.com/photo-1525385133512-2f3bdd039054?auto=format&fit=crop&w=200&q=80'">
+          </div>
+          <div class="drink-name">Dragon Berry Dream</div>
+          <div class="drink-price">$11</div>
+          <input type="checkbox" class="drink-checkbox" value="11" data-name="Dragon Berry Dream" onchange="calculateTotal()">
         </div>
-        <div class="drink-name">Dragon Berry Dream</div>
-        <div class="drink-price">$11</div>
-        <input type="checkbox" class="drink-checkbox" value="11" data-name="Dragon Berry Dream" onchange="calculateTotal()">
       </div>
     </div>
   </div>
