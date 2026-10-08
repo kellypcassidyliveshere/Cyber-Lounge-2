@@ -85,7 +85,7 @@
     .booster-title {
       font-size: 1.15rem;
       font-weight: 800;
-      color: #00d2ff; /* Standout Coloured Header */
+      color: #00d2ff;
       margin-bottom: 6px;
       letter-spacing: 0.5px;
     }
@@ -315,7 +315,6 @@
     let selectedBoostersCount = 0;
 
     window.onload = function() {
-      // Retrieve the price carried over from index.html
       const savedCartTotal = localStorage.getItem('cartTotal');
       if (savedCartTotal) {
         basePrice = parseFloat(savedCartTotal);
@@ -346,8 +345,7 @@
     function submitBoostersOrder() {
       const finalTotal = basePrice + (selectedBoostersCount * 2);
       localStorage.setItem('cartTotal', finalTotal.toFixed(2));
-      alert('Boosters added! Total updated to $' + finalTotal.toFixed(2));
-      window.location.href = 'index.html';
+      window.location.href = 'proceedpayment.html';
     }
   </script>
 </body>
